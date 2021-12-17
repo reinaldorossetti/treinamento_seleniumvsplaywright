@@ -1,12 +1,14 @@
 package com.seleniumvscypress.core
 
 import io.appium.java_client.pagefactory.AppiumFieldDecorator
+import io.qameta.allure.Allure
 import org.openqa.selenium.*
 import org.openqa.selenium.interactions.Actions
 import org.openqa.selenium.support.PageFactory
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.Select
 import org.openqa.selenium.support.ui.WebDriverWait
+import java.io.ByteArrayInputStream
 import java.time.Duration
 import kotlin.test.fail
 
@@ -20,6 +22,7 @@ open class Base(open var driver: WebDriver) {
     private val baseURL = "https://demo.applitools.com"
     private val timeout = 30L
     private var wait: WebDriverWait = WebDriverWait(driver, Duration.ofSeconds(timeout))
+    val path: String = System.getProperty("user.dir")
 
     /*
     Usando o page factory do Appium client, pra definir tempo dos elementos.
@@ -113,8 +116,8 @@ open class Base(open var driver: WebDriver) {
     }
 
     /**
-     * A função type realiza o envio do texto para o elemento.
-     * @param text passar o texto que vai validar no elemento.
+     * A função selectByValue a seleção do combobox por value.
+     * @param value passar o texto que vai validar no elemento.
      */
     fun WebElement.selectByValue(value: String) {
         Select(this).selectByValue(value)
@@ -143,6 +146,12 @@ open class Base(open var driver: WebDriver) {
     fun selectByVisibleText(element: WebElement, text: String) {
         clickJavaScript(element)
         Select(element).selectByVisibleText(text)
+    }
+
+    fun takeScreen(screenName: String = "TestScreen"){
+        Allure.addAttachment(
+            screenName, ByteArrayInputStream((driver as TakesScreenshot).getScreenshotAs(OutputType.BYTES))
+        )
     }
 
 }

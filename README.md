@@ -42,12 +42,24 @@ Em cypress
 ```renderscript
 describe("Login", () => {
     it('should select an option from the dropdown',() => {
-	cy.visit('https://demo.applitools.com/');
+	cy.visit('https://kitchen.applitools.com/ingredients/select');
 	cy.get('#username')
 	    .select('colbyfayock')
 	    .should('have.value', 'ginger')
 });
 });	
+```
+
+### Round 03.
+Selenium Kotlin
+```kotlin
+    @Test
+    fun round3FileUpload(){
+        visit("https://kitchen.applitools.com/ingredients/file-picker")
+        step("should upload a photo to the file picker")
+        find("#photo-upload", true)
+            .sendKeys("$path/files/cypress-soh-que-nao.PNG")
+    }
 ```
 
 Procurando um elemento:
