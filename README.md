@@ -28,7 +28,7 @@ describe("Login", () => {
 ```
 
 ### Round 02.
-Selenium Kotlin
+Selenium Kotlin - Selecionar o combobox, pelo value.
 ```kotlin
 @Test
 fun round2Select(){
@@ -50,7 +50,7 @@ describe("Login", () => {
 });	
 ```
 
-### Round 03.
+### Round 03 - Fazendo o upload de uma imagem.
 Selenium Kotlin
 ```kotlin
     @Test
@@ -61,6 +61,34 @@ Selenium Kotlin
             .sendKeys("$path/files/cypress-soh-que-nao.PNG")
     }
 ```
+### Round 04 - mudança de tela\iframe.
+### Deixei mais complexo, pra mostrar que pode fazer um let dentro de outro, e performático.
+Selenium Kotlin
+```kotlin
+    @Test
+    fun round4Iframe_CrossDomain(){
+        visit("https://kitchen.applitools.com/ingredients/iframe")
+        step("Play de Youtube video.")
+        val resultValue = driver.switchTo().frame(1).let {
+            find("#player", true).let { it.findElement(By.cssSelector(
+                "button[aria-label=Reproduzir]")).click(); it.isDisplayed   }
+        }
+        assertTrue(resultValue, "falhou ao validar a mudança de iframe")
+    }
+```
+
+### Round 05 - Trabalhando com esperas e tempo de duração.
+### Deixei mais complexo, pra mostrar que pode fazer um let dentro de outro, e performático.
+Selenium Kotlin
+```kotlin
+    @Test
+    fun round5WaitForFilter(){
+        visit("https://automationbookstore.dev/")
+        step("Wait for Filter")
+        find("li.ui-screen-hidden", duration = 5)
+    }
+```
+
 
 Procurando um elemento:
 https://www.selenium.dev/documentation/webdriver/elements/

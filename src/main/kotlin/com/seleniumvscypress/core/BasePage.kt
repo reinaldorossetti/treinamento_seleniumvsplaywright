@@ -17,7 +17,7 @@ import kotlin.test.fail
  * Funções específicas devem esta na Page.
  * Passar o elemento mapeado sempre para a BasePage.
  */
-open class Base(open var driver: WebDriver) {
+open class Base(var driver: WebDriver) {
 
     private val baseURL = "https://demo.applitools.com"
     private val timeout = 30L
@@ -42,8 +42,7 @@ open class Base(open var driver: WebDriver) {
 
     /**
      * A função click realiza o click e espera a condição ser possível realizar o clique.
-     * @param element passa o elemento mapeado no factory.
-     * @param focus passar true para focar no elemento, false é o padrão.
+     * @param elem passa o elemento mapeado no factory.
      */
     fun click(elem: WebElement){
         val element = wait.until(ExpectedConditions.elementToBeClickable(elem))
@@ -61,12 +60,19 @@ open class Base(open var driver: WebDriver) {
     }
 
     /**
-     * A função find realiza busca via css selector e espera a condição do elemento ser visível.
-     * @param element passa o elemento mapeado no factory.
+     * A função find realiza busca via css seletor e espera a condição do elemento ser visível.
+     * @param cssValue passa o elemento mapeado no factory.
      * @param focus passar true para focar no elemento, false é o padrão.
      */
     fun find(cssValue: String, focus: Boolean = false): WebElement {
         val elem = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssValue)))
+        if (focus) Actions(driver).moveToElement(elem).build().perform()
+        return elem
+    }
+
+    fun find(cssValue: String, focus: Boolean = false, duration: Int): WebElement {
+        val wait = WebDriverWait(driver, Duration.ofSeconds(duration.toLong()))
+        val elem = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(cssValue)))
         if (focus) Actions(driver).moveToElement(elem).build().perform()
         return elem
     }
@@ -116,7 +122,7 @@ open class Base(open var driver: WebDriver) {
     }
 
     /**
-     * A função selectByValue a seleção do combobox por value.
+     * A função selectByValue a seleção do combo por value.
      * @param value passar o texto que vai validar no elemento.
      */
     fun WebElement.selectByValue(value: String) {
@@ -131,7 +137,7 @@ open class Base(open var driver: WebDriver) {
 
 
     /**
-     * A funcao clickJS realiza o click via javascript.
+     * A função clickJS realiza o click via javascript.
      * @param element passa o elemento mapeado no factory.
      */
     fun clickJavaScript(element: WebElement) {
@@ -139,15 +145,19 @@ open class Base(open var driver: WebDriver) {
     }
 
     /**
-     * A funcao selectByVisibleText faz a selecao do combobox passando o By e o texto.
-     * @param locator passar o elemento via By do selenium.
-     * @param text passar o texto visivel que deseja selecionar.
+     * A função selectByVisibleText faz a seleção do combo passando o elemento mapeado e o texto.
+     * @param element passar o elemento mapeado.
+     * @param text passar o texto visível que deseja selecionar.
      */
     fun selectByVisibleText(element: WebElement, text: String) {
         clickJavaScript(element)
         Select(element).selectByVisibleText(text)
     }
 
+    /**
+     * A função takeScreen tira a foto via selenium e anexo no reporte do allure.
+     * @param screenName passar o nome da tela ou sem vai pegar o valor padrão.
+     */
     fun takeScreen(screenName: String = "TestScreen"){
         Allure.addAttachment(
             screenName, ByteArrayInputStream((driver as TakesScreenshot).getScreenshotAs(OutputType.BYTES))

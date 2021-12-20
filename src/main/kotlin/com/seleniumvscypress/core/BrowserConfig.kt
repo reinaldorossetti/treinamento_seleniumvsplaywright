@@ -6,7 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
 import java.time.Duration
 
-class BrowserConfig(){
+class BrowserConfig{
 
     private val timeout = 30L
 
