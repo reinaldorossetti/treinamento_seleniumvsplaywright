@@ -5,6 +5,9 @@ Selenium WebDriver é um projeto abrangente que encapsula uma variedade de ferra
 O Selenium fornece especificamente uma infraestrutura para a especificação W3C WebDriver - 
 uma plataforma e interface de codificação neutra de linguagem compatível com todos os principais navegadores da Web.
 
+
+Adicionei a função step para inserir um passo no nosso relatório do allure, mas não faz parte da brincadeira esse step.
+
 ### Round 01.
 Selenium Kotlin
 ```kotlin
