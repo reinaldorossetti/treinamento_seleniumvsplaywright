@@ -20,7 +20,7 @@ import kotlin.test.fail
  */
 open class Base(var driver: WebDriver) {
 
-    private val baseURL = "https://demo.applitools.com"
+    private val baseURL = "https://kitchen.applitools.com"
     private val timeout = 30L
     private var wait: WebDriverWait = WebDriverWait(driver, Duration.ofSeconds(timeout))
     val path: String = System.getProperty("user.dir")
