@@ -1,10 +1,5 @@
 package com.seleniumvscypress.core
 
-import com.applitools.eyes.BatchInfo
-import com.applitools.eyes.selenium.BrowserType
-import com.applitools.eyes.selenium.Configuration
-import com.applitools.eyes.selenium.Eyes
-import com.applitools.eyes.visualgrid.model.DeviceName
 import io.appium.java_client.pagefactory.AppiumFieldDecorator
 import io.qameta.allure.Allure
 import org.openqa.selenium.*
@@ -55,6 +50,11 @@ open class Base(var driver: WebDriver) {
         Actions(driver).moveToElement(element).click().build().perform()
     }
 
+    fun click(cssSelector: String){
+        val element = find(cssSelector)
+        Actions(driver).moveToElement(element).click().build().perform()
+    }
+
     /**
      * A função find realiza busca e espera a condição do elemento ser visível.
      * @param element passa o elemento mapeado no factory.
@@ -67,11 +67,11 @@ open class Base(var driver: WebDriver) {
 
     /**
      * A função find realiza busca via css seletor e espera a condição do elemento ser visível.
-     * @param cssValue passa o elemento mapeado no factory.
+     * @param cssSelector passa o elemento mapeado no factory.
      * @param focus passar true para focar no elemento, false é o padrão.
      */
-    fun find(cssValue: String, focus: Boolean = false): WebElement {
-        val elem = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssValue)))
+    fun find(cssSelector: String, focus: Boolean = false): WebElement {
+        val elem = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)))
         if (focus) Actions(driver).moveToElement(elem).build().perform()
         return elem
     }
@@ -141,7 +141,6 @@ open class Base(var driver: WebDriver) {
         }
     }
 
-
     /**
      * A função clickJS realiza o click via javascript.
      * @param element passa o elemento mapeado no factory.
@@ -170,31 +169,12 @@ open class Base(var driver: WebDriver) {
         )
     }
 
+    /**
+     * A função alert espera o alerta esta presente e passa o foco para o mesmo.
+     */
     fun alert(): Alert {
         wait.until(ExpectedConditions.alertIsPresent())
         return driver.switchTo().alert()
-    }
-
-    fun setUpEyes(eyes: Eyes) {
-
-        // Initialize eyes Configuration
-        val config: Configuration = eyes.configuration
-
-        // You can get your api key from the Applitools dashboard
-        config.setApiKey("APPLITOOLS_API_KEY")
-
-        // create a new batch info instance and set it to the configuration
-        config.setBatch(BatchInfo("Ultrafast Batch"))
-
-        // Add browsers with different viewports
-        config.addBrowser(800, 600, BrowserType.CHROME)
-        config.addBrowser(700, 500, BrowserType.FIREFOX)
-        config.addBrowser(1600, 1200, BrowserType.IE_11)
-        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM)
-        config.addBrowser(800, 600, BrowserType.SAFARI)
-
-        // Set the configuration object to eyes
-        eyes.setConfiguration(config)
     }
 
 }

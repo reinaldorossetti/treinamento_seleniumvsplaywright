@@ -11,14 +11,15 @@ Selenium Kotlin
 @Test
 fun round1Login(){
     visit("/")
+    step("Realizando o login no site")
     find("#username", true).type("colbyfayock")
     find("#password", true).type("Password1234")
-    find("#log-in", false).click()
+    click("#log-in")
     find(".element-header", true).contains("Financial Overview")
 }
 ``` 
 Em cypress
-```renderscript
+```js
 describe("Login", () => {
 	cy.visit('https://demo.applitools.com/');
 	cy.get('#username').type('colbyfayock');
@@ -32,14 +33,14 @@ Selenium Kotlin - Selecionar o combobox, pelo value.
 ```kotlin
 @Test
 fun round2Select(){
-    step('should select an option from the dropdown')
     visit("https://kitchen.applitools.com/ingredients/select")
+    step("Selecionando o dropbox e validando a seleção")
     find("#spices-select-single", true)
         .selectByValue("ginger")
 }
 ``` 
 Em cypress
-```renderscript
+```js
 describe("Login", () => {
     it('should select an option from the dropdown',() => {
 	cy.visit('https://kitchen.applitools.com/ingredients/select');
@@ -68,7 +69,7 @@ Selenium Kotlin
     @Test
     fun round4Iframe_CrossDomain(){
         visit("https://kitchen.applitools.com/ingredients/iframe")
-        step("Play de Youtube video.")
+        step("Realiza a troca de tela e dar o play no youtube")
         val resultValue = driver.switchTo().frame(1).let {
             find("#player", true).let { it.findElement(By.cssSelector(
                 "button[aria-label=Reproduzir]")).click(); it.isDisplayed   }
@@ -95,16 +96,16 @@ Selenium Kotlin
     @Test
     fun round6Alerts01(){
         visit("https://kitchen.applitools.com/ingredients/alert")
-        find("#alert-button").click()
+        click("#alert-button")
         alert().accept()
-        find("#alert-button").click()
+        click("#alert-button")
         alert().dismiss()
     }
-
+    
     @Test
     fun round6Alerts02(){
         visit("https://kitchen.applitools.com/ingredients/alert")
-        find("#prompt-button").click()
+        click("#prompt-button")
         alert().apply { sendKeys("nachos"); accept() }
     }
 ```
