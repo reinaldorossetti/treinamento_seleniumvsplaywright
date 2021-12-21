@@ -49,6 +49,7 @@ class SeleniumVsCypress: Base(BrowserConfig().setChrome()) {
     @Test
     fun round4Iframe_CrossDomain(){
         visit("https://kitchen.applitools.com/ingredients/iframe")
+        step("Realizando a troca de iframe, ou seja pra tela do youtube para dar o clique.")
         driver.switchTo().frame(1)
         find("button[aria-label=Reproduzir]").click()
     }
