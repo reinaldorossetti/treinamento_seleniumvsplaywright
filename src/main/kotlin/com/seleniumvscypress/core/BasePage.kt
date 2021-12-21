@@ -76,9 +76,9 @@ open class Base(var driver: WebDriver) {
         return elem
     }
 
-    fun find(cssValue: String, focus: Boolean = false, duration: Int): WebElement {
-        val wait = WebDriverWait(driver, Duration.ofSeconds(duration.toLong()))
-        val elem = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(cssValue)))
+    fun find(cssSelector: String, focus: Boolean = false, durationMax: Int): WebElement {
+        val wait = WebDriverWait(driver, Duration.ofSeconds(durationMax.toLong()))
+        val elem = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(cssSelector)))
         if (focus) Actions(driver).moveToElement(elem).build().perform()
         return elem
     }
@@ -96,10 +96,10 @@ open class Base(var driver: WebDriver) {
 
     /**
      * A função contains verifica se o elemento contém o texto esperado.
-     * @param text passar o texto que vai validar no elemento.
+     * @param textElement passar o texto que vai validar no elemento.
      */
-    fun WebElement.contains(text: String) {
-        when (this.text.contains(text)) {
+    fun WebElement.contains(textElement: String) {
+        when (this.text.contains(textElement)) {
             true -> println("Elemento encontrado na página.")
             else -> fail("Assert Falhou -> ${this.text}")
         }
