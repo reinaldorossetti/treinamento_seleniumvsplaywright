@@ -88,7 +88,49 @@ Selenium Kotlin
         find("li.ui-screen-hidden", duration = 5)
     }
 ```
+### Round 06 - Trabalhando com esperas e tempo de duração.
+### Deixei somente com duas funções.
+Selenium Kotlin
+```kotlin
+    @Test
+    fun round6Alerts01(){
+        visit("https://kitchen.applitools.com/ingredients/alert")
+        find("#alert-button").click()
+        alert().accept()
+        find("#alert-button").click()
+        alert().dismiss()
+    }
 
+    @Test
+    fun round6Alerts02(){
+        visit("https://kitchen.applitools.com/ingredients/alert")
+        find("#prompt-button").click()
+        alert().apply { sendKeys("nachos"); accept() }
+    }
+```
+### Round 07 - Muda o foco para uma nova janela.
+Selenium Kotlin
+```kotlin
+    @Test
+    fun round07_testNewTab(){
+        visit("https://kitchen.applitools.com/ingredients/links")
+        find("#button-the-kitchen-table").click()
+        driver.getWindowHandles().map { driver.switchTo().window(it) }
+        assertTrue(find("#fruits-vegetables").isDisplayed())
+    }
+```
+
+### Round 09 - Teste para dar o printscreen na tela.
+Selenium Kotlin
+```kotlin
+    @Test
+    fun round09_testTakeScreen(){
+        visit("https://kitchen.applitools.com/ingredients/table")
+        find("#column-button-name").click()
+        takeScreen()
+        assertTrue(find("#fruits-vegetables").isDisplayed())
+    }
+```
 
 Procurando um elemento:
 https://www.selenium.dev/documentation/webdriver/elements/

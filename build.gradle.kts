@@ -36,6 +36,8 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-java:4.0.0")
     // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-chrome-driver
     implementation("org.seleniumhq.selenium:selenium-chrome-driver:4.0.0")
+    // https://mvnrepository.com/artifact/com.applitools/eyes-selenium-java3
+    implementation("com.applitools:eyes-selenium-java3:3.210.6")
 }
 
 configure<JavaPluginConvention> {

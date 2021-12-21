@@ -1,5 +1,10 @@
 package com.seleniumvscypress.core
 
+import com.applitools.eyes.BatchInfo
+import com.applitools.eyes.selenium.BrowserType
+import com.applitools.eyes.selenium.Configuration
+import com.applitools.eyes.selenium.Eyes
+import com.applitools.eyes.visualgrid.model.DeviceName
 import io.appium.java_client.pagefactory.AppiumFieldDecorator
 import io.qameta.allure.Allure
 import org.openqa.selenium.*
@@ -11,6 +16,7 @@ import org.openqa.selenium.support.ui.WebDriverWait
 import java.io.ByteArrayInputStream
 import java.time.Duration
 import kotlin.test.fail
+
 
 /**
  * Classe BaseCore contém funções globais básicas para as pages.
@@ -162,6 +168,33 @@ open class Base(var driver: WebDriver) {
         Allure.addAttachment(
             screenName, ByteArrayInputStream((driver as TakesScreenshot).getScreenshotAs(OutputType.BYTES))
         )
+    }
+
+    fun alert(): Alert {
+        wait.until(ExpectedConditions.alertIsPresent())
+        return driver.switchTo().alert()
+    }
+
+    fun setUpEyes(eyes: Eyes) {
+
+        // Initialize eyes Configuration
+        val config: Configuration = eyes.configuration
+
+        // You can get your api key from the Applitools dashboard
+        config.setApiKey("APPLITOOLS_API_KEY")
+
+        // create a new batch info instance and set it to the configuration
+        config.setBatch(BatchInfo("Ultrafast Batch"))
+
+        // Add browsers with different viewports
+        config.addBrowser(800, 600, BrowserType.CHROME)
+        config.addBrowser(700, 500, BrowserType.FIREFOX)
+        config.addBrowser(1600, 1200, BrowserType.IE_11)
+        config.addBrowser(1024, 768, BrowserType.EDGE_CHROMIUM)
+        config.addBrowser(800, 600, BrowserType.SAFARI)
+
+        // Set the configuration object to eyes
+        eyes.setConfiguration(config)
     }
 
 }
