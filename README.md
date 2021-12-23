@@ -14,10 +14,23 @@ Selenium Kotlin
 @Test
 fun round1Login(){
     visit("/")
-    step("Realizando o login no site")
     find("#username", true).type("colbyfayock")
     find("#password", true).type("Password1234")
     click("#log-in")
+    find(".element-header", true).contains("Financial Overview")
+}
+``` 
+Com BDD\Gherkin
+```kotlin
+@Test
+fun round1Login(){
+    step("Dado que esteja no site")
+    visit("/")
+    step("Quando realizar o login")
+    find("#username", true).type("colbyfayock")
+    find("#password", true).type("Password1234")
+    click("#log-in")
+    step("Então valido o menu principal do site")
     find(".element-header", true).contains("Financial Overview")
 }
 ``` 
@@ -31,6 +44,8 @@ describe("Login", () => {
 	cy.get('.element-header').contains('Financial Overview');
 });	
 ```
+Aqui não precisamos da instância como no cypress, pois estamos herdando a page base com as funções, mas também podemos usar a instancia do driver.
+No meu ponto a escrita em Kotlin é melhor sem ponto e virgula no final, além disso podemos criar tags através do junit 5. Podemos descrever nosso testes utilizando a biblioteca do Allure no formato BDD\Gherkin, sem utilizar a biblioteca do Cucumber.
 
 ### Round 02.
 Selenium Kotlin - Selecionar o combobox, pelo value.
