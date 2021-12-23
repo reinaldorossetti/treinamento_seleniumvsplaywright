@@ -37,11 +37,11 @@ fun round1Login(){
 Em cypress
 ```js
 describe("Login", () => {
-	cy.visit('https://demo.applitools.com/');
-	cy.get('#username').type('colbyfayock');
-	cy.get('#password').type('Password1234');
-	cy.get('#log-in').click();
-	cy.get('.element-header').contains('Financial Overview');
+   cy.visit('https://demo.applitools.com/');
+   cy.get('#username').type('colbyfayock');
+   cy.get('#password').type('Password1234');
+   cy.get('#log-in').click();
+   cy.get('.element-header').contains('Financial Overview');
 });	
 ```
 Aqui não precisamos da instância como no cypress, pois estamos herdando a page base com as funções, mas também podemos usar a instancia do driver.
