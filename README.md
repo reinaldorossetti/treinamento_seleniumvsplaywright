@@ -1,5 +1,5 @@
 # treinamento_selenium_kotlin
-Treinamento em Selenium em Kotlin, essa foi uma simples comparação de escrita de código, kotlin estender a biblioteca do Selenium e adicionar um método personalizado, o que pode ser de grande ajudar, para diminuir a escrita de código.
+Treinamento em Selenium em Kotlin, essa foi uma simples comparação de escrita de código, em kotlin consigo estender a biblioteca do Selenium e adicionar um método personalizado, o que pode ser de grande ajudar, para diminuir a escrita de código, adicionamos os métodos selectByValue, type e contains.
 
 Selenium WebDriver é um projeto abrangente que encapsula uma variedade de ferramentas e bibliotecas que permitem a automação do navegador da web. 
 O Selenium fornece especificamente uma infraestrutura para a especificação W3C WebDriver - 
