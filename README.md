@@ -82,7 +82,7 @@ Selenium Kotlin
     }
 ```
 ### Round 04 - mudança de tela\iframe.
-### Deixei mais complexo, pra mostrar que pode fazer um let dentro de outro, e performático.
+### Deixei mais complexo, pra mostrar que pode fazer um let dentro de outro, e performático. Usar somente em casos bem complexos aonde tenho o elemento pai e filho não tem um localizador único.
 Selenium Kotlin
 ```kotlin
     @Test
