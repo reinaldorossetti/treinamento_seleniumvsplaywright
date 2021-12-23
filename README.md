@@ -45,7 +45,7 @@ describe("Login", () => {
 });	
 ```
 Aqui não precisamos da instância como no cypress, pois estamos herdando a page base com as funções, mas também podemos usar a instancia do driver.
-No meu ponto a escrita em Kotlin é melhor sem ponto e virgula no final, além disso podemos criar tags através do junit 5. Podemos descrever nosso testes utilizando a biblioteca do Allure no formato BDD\Gherkin, sem utilizar a biblioteca do Cucumber.
+No meu ponto a escrita em Kotlin é melhor sem ponto e virgula no final, além disso podemos criar tags através do junit 5. Podemos descrever nosso testes utilizando a biblioteca do Allure no formato BDD\Gherkin, sem utilizar a biblioteca do Cucumber que cria mais uma camada desnecessária.
 
 ### Round 02.
 Selenium Kotlin - Selecionar o combobox, pelo value.
