@@ -5,6 +5,10 @@ import com.seleniumvscypress.core.BrowserConfig
 import io.qameta.allure.Allure.step
 import io.qameta.allure.Attachment
 import org.junit.jupiter.api.*
+import org.junit.jupiter.api.parallel.ResourceLock
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
+import org.junit.jupiter.params.provider.ValueSource
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SeleniumVsCypress: Base(BrowserConfig().setChrome()) {
@@ -16,7 +20,7 @@ class SeleniumVsCypress: Base(BrowserConfig().setChrome()) {
     @Attachment(type = "image/png")
     fun testTakeScreen() { takeScreen() }
 
-    @Test
+    @Test @ResourceLock(value = "resources")
     fun round1Login(){
         visit("https://demo.applitools.com/")
         step("Realizando teste de login")
@@ -27,11 +31,13 @@ class SeleniumVsCypress: Base(BrowserConfig().setChrome()) {
         find(".element-header").contains("Financial Overview")
     }
 
-    @Test
-    fun round2_testSelect(){
+    @ParameterizedTest
+    @ValueSource(strings = ["ginger", "paprika", "garlic", "chili-powder"])
+    fun round2_testSelect(input: String){
+        println(input)
         visit("/ingredients/select")
         step("Realizando teste do comboxbox de seleção")
-        find("#spices-select-single").selectByValue("ginger")
+        find("#spices-select-single").selectByValue(input)
     }
 
     @Test

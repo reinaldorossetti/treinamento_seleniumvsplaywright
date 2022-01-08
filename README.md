@@ -35,14 +35,15 @@ describe("Login", () => {
 ```
 
 ### Round 02.
-Selenium Kotlin - Selecionar o combobox, pelo value.
+Selenium Kotlin - Selecionar o combobox pelo value, repetindo os testes pelo valor dos parametros.
 ```kotlin
-@Test
-fun round2Select(){
-    visit("https://kitchen.applitools.com/ingredients/select")
-    step("Selecionando o dropbox e validando a seleção")
-    find("#spices-select-single", true)
-        .selectByValue("ginger")
+@ParameterizedTest
+@ValueSource(strings = ["ginger", "paprika", "garlic", "chili-powder"])
+fun round2_testSelect(input: String){
+    println(input)
+    visit("/ingredients/select")
+    step("Realizando teste do comboxbox de seleção")
+    find("#spices-select-single").selectByValue(input)
 }
 ``` 
 Em cypress
