@@ -1,15 +1,10 @@
 package com.seleniumvscypress
 
-import com.applitools.eyes.selenium.Eyes
 import com.seleniumvscypress.core.Base
 import com.seleniumvscypress.core.BrowserConfig
-import com.seleniumvscypress.core.SetupEyes
 import io.qameta.allure.Allure.step
 import io.qameta.allure.Attachment
 import org.junit.jupiter.api.*
-import org.openqa.selenium.By
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SeleniumVsCypress: Base(BrowserConfig().setChrome()) {
@@ -50,8 +45,8 @@ class SeleniumVsCypress: Base(BrowserConfig().setChrome()) {
     fun round4Iframe_CrossDomain(){
         visit("https://kitchen.applitools.com/ingredients/iframe")
         step("Realizando a troca de iframe, ou seja pra tela do youtube para dar o clique.")
-        driver.switchTo().frame(1)
-        find("button[aria-label=Reproduzir]").click()
+        frameIndex(1)
+        find("button[aria-label=Reproduzir]", focus = true).click()
     }
 
     @Test

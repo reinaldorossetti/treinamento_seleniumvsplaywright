@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 
 plugins {
-    kotlin("jvm") version "1.5.21"
+    kotlin("jvm") version "1.6.0"
     id("io.qameta.allure") version "2.8.1"
     id("org.gradle.test-retry") version "1.3.1"
     java
@@ -20,7 +20,7 @@ repositories {
 dependencies {
     implementation("com.google.code.gson:gson:2.8.9")
     implementation("org.hamcrest:hamcrest:2.2")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.5.20-M1")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.6.0")
     implementation("org.jetbrains.kotlin:kotlin-test:1.6.0")
     testImplementation("io.rest-assured:rest-assured:4.4.0")
     testImplementation("io.rest-assured:kotlin-extensions:4.4.0")
@@ -49,8 +49,9 @@ allure {
     downloadLinkFormat = "https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.14.0/allure-commandline-2.14.0.zip"
 }
 
-
 tasks.test {
+    systemProperties["junit.jupiter.execution.parallel.enabled"] = true
+    maxParallelForks = 3
     useJUnitPlatform()
     testLogging {
         events(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
