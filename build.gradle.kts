@@ -51,6 +51,8 @@ allure {
 
 
 tasks.test {
+    // rodando 3 instancias em paralelo.
+    maxParallelForks = 3
     useJUnitPlatform()
     testLogging {
         events(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
