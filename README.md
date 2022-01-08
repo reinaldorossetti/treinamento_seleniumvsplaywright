@@ -48,14 +48,15 @@ Aqui não precisamos da instância como no cypress, pois estamos herdando a page
 No meu ponto a escrita em Kotlin é melhor sem ponto e virgula no final, além disso podemos criar tags através do junit 5. Podemos descrever nosso testes utilizando a biblioteca do Allure no formato BDD\Gherkin, sem utilizar a biblioteca do Cucumber que cria mais uma camada desnecessária.
 
 ### Round 02.
-Selenium Kotlin - Selecionar o combobox, pelo value.
+Selenium Kotlin - Selecionar o combobox pelo value, repetindo os testes pelo valor dos parametros.
 ```kotlin
-@Test
-fun round2Select(){
-    visit("https://kitchen.applitools.com/ingredients/select")
-    step("Selecionando o dropbox e validando a seleção")
-    find("#spices-select-single", true)
-        .selectByValue("ginger")
+@ParameterizedTest
+@ValueSource(strings = ["ginger", "paprika", "garlic", "chili-powder"])
+fun round2_testSelect(input: String){
+    println(input)
+    visit("/ingredients/select")
+    step("Realizando teste do comboxbox de seleção")
+    find("#spices-select-single").selectByValue(input)
 }
 ``` 
 Em cypress
