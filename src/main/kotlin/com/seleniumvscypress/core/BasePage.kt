@@ -174,7 +174,7 @@ open class Base(var driver: WebDriver) {
     fun scrollIntoView(cssSelector: String, timeout: Long = 2) {
         (driver as JavascriptExecutor).executeScript(
             "document.querySelector('$cssSelector').scrollIntoView();")
-        sleep(timeout * 1000) // tempo realizar o trigger.
+        sleep(timeout * 1000) // tempo realizar o scroll.
     }
 
     /**
