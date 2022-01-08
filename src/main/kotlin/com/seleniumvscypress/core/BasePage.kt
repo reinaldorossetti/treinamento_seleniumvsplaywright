@@ -76,9 +76,10 @@ open class Base(var driver: WebDriver) {
      * @param focus passar true para focar no elemento, false é o padrão.
      */
     fun find(cssSelector: String, focus: Boolean = false): WebElement {
-        if(focus) { trigger(cssSelector, "focus"); scrollIntoView(cssSelector) }
-        val elem = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)))!!
-        return elem
+        if (focus) {
+            trigger(cssSelector, "focus"); scrollIntoView(cssSelector)
+        }
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)))!!
     }
 
     fun find(cssSelector: String, focus: Boolean = false, durationMax: Int): WebElement {
