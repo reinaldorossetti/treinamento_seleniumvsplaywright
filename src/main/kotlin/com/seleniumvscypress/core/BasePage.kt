@@ -9,6 +9,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.Select
 import org.openqa.selenium.support.ui.WebDriverWait
 import java.io.ByteArrayInputStream
+import java.io.File
+import java.io.InputStream
+import java.lang.Thread.sleep
 import java.time.Duration
 import kotlin.test.fail
 
@@ -24,6 +27,8 @@ open class Base(var driver: WebDriver) {
     private val timeout = 30L
     private var wait: WebDriverWait = WebDriverWait(driver, Duration.ofSeconds(timeout))
     val path: String = System.getProperty("user.dir")
+    private val inputStream: InputStream = File("$path\\src\\main\\kotlin\\com\\seleniumvscypress\\core\\jquery\\jquery-3.6.0.js").inputStream()
+    private val inputString = inputStream.bufferedReader().use { it.readText() }
 
     /*
     Usando o page factory do Appium client, pra definir tempo dos elementos.
@@ -62,7 +67,7 @@ open class Base(var driver: WebDriver) {
      */
     fun find(element: WebElement, focus: Boolean = false): WebElement {
         if (focus) Actions(driver).moveToElement(element).build().perform()
-        return wait.until(ExpectedConditions.visibilityOf(element))
+        return wait.until(ExpectedConditions.visibilityOf(element))!!
     }
 
     /**
@@ -71,14 +76,15 @@ open class Base(var driver: WebDriver) {
      * @param focus passar true para focar no elemento, false é o padrão.
      */
     fun find(cssSelector: String, focus: Boolean = false): WebElement {
-        val elem = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)))
-        if (focus) Actions(driver).moveToElement(elem).build().perform()
-        return elem
+        if (focus) {
+            trigger(cssSelector, "focus"); scrollIntoView(cssSelector)
+        }
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)))!!
     }
 
     fun find(cssSelector: String, focus: Boolean = false, durationMax: Int): WebElement {
         val wait = WebDriverWait(driver, Duration.ofSeconds(durationMax.toLong()))
-        val elem = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(cssSelector)))
+        val elem = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(cssSelector)))!!
         if (focus) Actions(driver).moveToElement(elem).build().perform()
         return elem
     }
@@ -91,7 +97,7 @@ open class Base(var driver: WebDriver) {
      */
     fun sendKeys(element: WebElement, text: String, focus: Boolean = false) {
         if (focus) Actions(driver).moveToElement(element).build().perform()
-        wait.until(ExpectedConditions.visibilityOf(element)).sendKeys(text)
+        wait.until(ExpectedConditions.visibilityOf(element))?.sendKeys(text)
     }
 
     /**
@@ -103,6 +109,18 @@ open class Base(var driver: WebDriver) {
             true -> println("Elemento encontrado na página.")
             else -> fail("Assert Falhou -> ${this.text}")
         }
+    }
+
+
+    /**
+     * A função trigger faz o trigger quando o elemento espera um determinado evento.
+     * @param cssSelector passar o css selector para a funcao.
+     * @param comando passar o evento que deseja fazer o trigger.
+     */
+    fun trigger(cssSelector: String, comando: String, timeout: Long = 2) {
+        (driver as JavascriptExecutor).executeScript(inputString)
+        sleep(timeout * 1000) // tempo realizar a leitura do arquivo.
+        (driver as JavascriptExecutor).executeScript("return $('$cssSelector').trigger(\"$comando\")")
     }
 
     /**
@@ -150,6 +168,16 @@ open class Base(var driver: WebDriver) {
     }
 
     /**
+     * A função scrollIntoView realiza o click via javascript.
+     * @param element passa o elemento mapeado no factory.
+     */
+    fun scrollIntoView(cssSelector: String, timeout: Long = 2) {
+        (driver as JavascriptExecutor).executeScript(
+            "document.querySelector('$cssSelector').scrollIntoView();")
+        sleep(timeout * 1000) // tempo realizar o scroll.
+    }
+
+    /**
      * A função selectByVisibleText faz a seleção do combo passando o elemento mapeado e o texto.
      * @param element passar o elemento mapeado.
      * @param text passar o texto visível que deseja selecionar.
@@ -175,6 +203,13 @@ open class Base(var driver: WebDriver) {
     fun alert(): Alert {
         wait.until(ExpectedConditions.alertIsPresent())
         return driver.switchTo().alert()
+    }
+
+    /**
+     * A função frameId espera o Iframe esta presente e passa o foco para o mesmo.
+     */
+    fun frameIndex(frameid: Int) {
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameid))
     }
 
 }
