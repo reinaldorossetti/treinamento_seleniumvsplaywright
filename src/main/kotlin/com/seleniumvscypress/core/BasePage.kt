@@ -117,10 +117,10 @@ open class Base(var driver: WebDriver) {
      * @param cssSelector passar o css selector para a funcao.
      * @param comando passar o evento que deseja fazer o trigger.
      */
-    fun trigger(cssSelector: String, comando: String) {
+    fun trigger(cssSelector: String, comando: String, timeout: Long = 2) {
         (driver as JavascriptExecutor).executeScript(inputString)
-        (driver as JavascriptExecutor).executeScript("$('$cssSelector').trigger(\"$comando\")")
-        sleep(2.toLong()) // tempo realizar o trigger.
+        sleep(timeout * 1000) // tempo realizar a leitura do arquivo.
+        (driver as JavascriptExecutor).executeScript("return $('$cssSelector').trigger(\"$comando\")")
     }
 
     /**
@@ -171,9 +171,10 @@ open class Base(var driver: WebDriver) {
      * A função scrollIntoView realiza o click via javascript.
      * @param element passa o elemento mapeado no factory.
      */
-    fun scrollIntoView(cssSelector: String) {
+    fun scrollIntoView(cssSelector: String, timeout: Long = 2) {
         (driver as JavascriptExecutor).executeScript(
             "document.querySelector('$cssSelector').scrollIntoView();")
+        sleep(timeout * 1000) // tempo realizar o trigger.
     }
 
     /**
