@@ -18,7 +18,7 @@ class SeleniumVsCypress: Base(BrowserConfig().setChrome()) {
 
     @AfterEach
     @Attachment(type = "image/png")
-    fun testTakeScreen() { takeScreen() }
+    fun testTakeScreen() = takeScreen()
 
     @Test @ResourceLock(value = "resources")
     fun round1Login(){
