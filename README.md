@@ -70,6 +70,7 @@ describe("Login", () => {
 });
 });	
 ```
+Nossa função selectByValue em kotlin já valida se elemente foi selecionado, não precisando should aqui.
 
 ### Round 03 - Fazendo o upload de uma imagem.
 Selenium Kotlin
