@@ -21,7 +21,7 @@ import kotlin.test.fail
  * Funções específicas devem esta na Page.
  * Passar o elemento mapeado sempre para a BasePage.
  */
-open class Base(var driver: WebDriver) {
+open class BaseSelenium(var driver: WebDriver) {
 
     private val baseURL = "https://kitchen.applitools.com"
     private val timeout = 30L

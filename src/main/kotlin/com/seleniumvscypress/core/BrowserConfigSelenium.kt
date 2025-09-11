@@ -1,15 +1,12 @@
 package com.seleniumvscypress.core
 
-import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.PageLoadStrategy
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
-import java.io.File
-import java.io.InputStream
 import java.time.Duration
 
-class BrowserConfig{
+class BrowserConfigSelenium{
 
     private val timeout = 30L
     val path: String = System.getProperty("user.dir")
@@ -17,6 +14,9 @@ class BrowserConfig{
     fun setChrome(): WebDriver {
         val chromeOptions = ChromeOptions().apply {
            setPageLoadStrategy(PageLoadStrategy.NORMAL)
+            setAcceptInsecureCerts(true)
+            addArguments("--no-sandbox")
+            addArguments("--remote-allow-origins=*")
         }
         val driver = ChromeDriver(chromeOptions)
         driver.manage().apply {
@@ -29,9 +29,9 @@ class BrowserConfig{
     }
 }
 
-/*
+
 fun main(){
-    val driver = BrowserConfig().setChrome()
+    val driver = BrowserConfigSelenium().setChrome()
     driver.get("https://www.google.com")
 }
-*/
+
