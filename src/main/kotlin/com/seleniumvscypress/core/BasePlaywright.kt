@@ -43,9 +43,9 @@ open class BasePlaywright(var page: Page) {
     "NETWORKIDLE" - wait until there are no network connections for at least
      */
     fun loadPage(){
-        page.waitForLoadState(LoadState.LOAD)
+        //page.waitForLoadState(LoadState.LOAD)
         page.waitForLoadState(LoadState.DOMCONTENTLOADED)
-        page.waitForLoadState(LoadState.NETWORKIDLE)
+        //page.waitForLoadState(LoadState.NETWORKIDLE)
     }
 
     // espera 5s somente na segunda tentativa.
@@ -61,7 +61,7 @@ open class BasePlaywright(var page: Page) {
      */
     fun click(webElemento: String, retry: Boolean = true){
         try {
-            page.waitForSelector(webElemento, stateATTACHED)
+            //page.waitForSelector(webElemento, stateATTACHED)
             page.click(webElemento, Page.ClickOptions().setForce(true))
         } catch (ex: Exception){
             println(ex.message)

@@ -25,12 +25,12 @@ class PlaywrightTests: BasePlaywright(BrowserConfigPlaywright().setPWBrowser()) 
     @Test @ResourceLock(value = "resources")
     fun round1Login(){
         page.navigate("https://demo.applitools.com/")
-        step("Realizando teste de login")
+        step("Realizando teste de login - Playwright")
         page.fill("#username","angie")
         page.fill("#password","1234")
         // takeScreen("Tela de login")
         click("#log-in")
-        assertEquals(page.locator(".element-header").first().textContent().trim(),
+        assertEquals(page.locator(".element-header:nth-of-type(2)").textContent().trim(),
             "Financial Overview")
     }
 /*
