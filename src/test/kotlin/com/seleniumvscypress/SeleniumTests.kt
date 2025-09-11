@@ -10,14 +10,14 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class SeleniumVsCypress: BaseSelenium(BrowserConfigSelenium().setChrome()) {
+class SeleniumTests: BaseSelenium(BrowserConfigSelenium().setChrome()) {
 
     @AfterAll
     fun quit() = driver.quit()
 
-/*    @AfterEach
+    @AfterEach
     @Attachment(type = "image/png")
-    fun testTakeScreen() = takeScreen()*/
+    fun testTakeScreen() = takeScreen()
 
     @Test @ResourceLock(value = "resources")
     fun round1Login(){
@@ -25,7 +25,7 @@ class SeleniumVsCypress: BaseSelenium(BrowserConfigSelenium().setChrome()) {
         step("Realizando teste de login - Selenium")
         find("#username").sendKeys("angie")
         find("#password").sendKeys("1234")
-        // takeScreen("Tela de login")
+        takeScreen("Tela de login")
         click("#log-in")
         find(".element-header").contains("Financial Overview")
     }

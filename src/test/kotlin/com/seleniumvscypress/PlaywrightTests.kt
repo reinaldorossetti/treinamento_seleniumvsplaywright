@@ -1,9 +1,10 @@
 package com.seleniumvscypress
 
+import com.microsoft.playwright.FrameLocator
+import com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat
 import com.seleniumvscypress.core.BasePlaywright
 import com.seleniumvscypress.core.BrowserConfigPlaywright
 import io.qameta.allure.Allure.step
-import io.qameta.allure.Attachment
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.parallel.ResourceLock
 import org.junit.jupiter.params.ParameterizedTest
@@ -15,7 +16,7 @@ class PlaywrightTests: BasePlaywright(BrowserConfigPlaywright().setPWBrowser()) 
 
     @AfterAll
     fun quit() {
-       page.close()
+       pw.close()
     }
 
 /*    @AfterEach
@@ -24,44 +25,47 @@ class PlaywrightTests: BasePlaywright(BrowserConfigPlaywright().setPWBrowser()) 
 
     @Test @ResourceLock(value = "resources")
     fun round1Login(){
-        page.navigate("https://demo.applitools.com/")
+        pw.navigate("https://demo.applitools.com/")
         step("Realizando teste de login - Playwright")
-        page.fill("#username","angie")
-        page.fill("#password","1234")
+        pw.fill("#username","angie")
+        pw.fill("#password","1234")
         // takeScreen("Tela de login")
-        click("#log-in")
-        assertEquals(page.locator(".element-header:nth-of-type(2)").textContent().trim(),
+        pw.click("#log-in")
+        assertEquals(pw.locator(".element-header:nth-of-type(2)").textContent().trim(),
             "Financial Overview")
     }
-/*
+
     @ParameterizedTest
-    @ValueSource(strings = ["ginger", "paprika", "garlic", "chili-powder"])
+    @ValueSource(strings = ["Ginger", "Paprika", "Garlic", "Chili Powder"])
     fun round2_testSelect(input: String){
-        println(input)
-        visit("/ingredients/select")
+        navigate("/ingredients/select")
         step("Realizando teste do comboxbox de seleção")
-        find("#spices-select-single").selectByValue(input)
+        Assertions.assertEquals(input, selectOption("#spices-select-single", input))
     }
 
     @Test
     fun round3FileUpload(){
-        visit("/ingredients/file-picker")
+        navigate("/ingredients/file-picker")
         step("Realizando o upload da foto")
-        find("#photo-upload", true).sendKeys("$path/files/cypress-soh-que-nao.PNG")
+        setInputFiles("#photo-upload","$path/files/cypress-soh-que-nao.PNG")
+        assertThat(pw.getByText("Upload Preview")).isVisible()
     }
 
     @Test
     fun round4Iframe_CrossDomain(){
-        visit("https://kitchen.applitools.com/ingredients/iframe")
+        navigate("https://kitchen.applitools.com/ingredients/iframe")
         step("Realizando a troca de iframe, ou seja pra tela do youtube para dar o clique.")
-        frameIndex(1)
-        find("button[aria-label=Reproduzir]", focus = true).click()
+        val iframeLocator: FrameLocator = pw.frameLocator("#youtube-table-cypress");
+        // Locate an element inside the iframe and interact with it
+        val button = iframeLocator.locator("button[aria-label=Reproduzir]")
+        button.click()
+        assertThat(button).not().isVisible()
     }
 
     @Test
     fun round5_waitForFilter(){
-        visit("https://automationbookstore.dev/")
+        navigate("https://automationbookstore.dev/")
         step("Wait for Filter")
-        find("#pid1_author", durationMax = 5)
-    }*/
+        pw.locator("#pid1_author")
+    }
 }

@@ -14,7 +14,7 @@ class BrowserConfigPlaywright{
     lateinit var playwright: Playwright
     private lateinit var browser: Browser
     private var context: BrowserContext? = null
-    lateinit var page: Page
+    lateinit var pw: Page
 
     fun setPWBrowser(): Page {
         Playwright.create().use { playwright ->
