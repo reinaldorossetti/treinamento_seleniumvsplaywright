@@ -11,5 +11,7 @@ data class DesafioElements(
     val youtubePlayButton: String = "button[aria-label=Reproduzir]",
     val categoryFilterButton: String = "button[aria-label='All Categories']",
     val categoryOption: String = "text=JavaScript",
-    val bookItem: String = ".book-item"
+    val bookItem: String = ".book-item",
+    val usernameValue: String = "angie",
+    val passwordValue: String = "1234"
 )

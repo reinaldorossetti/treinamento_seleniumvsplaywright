@@ -2,6 +2,7 @@ package com.seleniumvscypress
 
 import com.seleniumvscypress.core.BaseSelenium
 import com.seleniumvscypress.core.BrowserConfigSelenium
+import com.seleniumvscypress.core.model.DesafioElements
 import io.qameta.allure.Allure.step
 import io.qameta.allure.Attachment
 import org.junit.jupiter.api.*
@@ -11,6 +12,8 @@ import org.junit.jupiter.params.provider.ValueSource
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SeleniumTests: BaseSelenium(BrowserConfigSelenium().setChrome()) {
+
+    private val elements = DesafioElements()
 
     @AfterAll
     fun quit() = driver.quit()
@@ -23,11 +26,11 @@ class SeleniumTests: BaseSelenium(BrowserConfigSelenium().setChrome()) {
     fun round1Login(){
         visit("https://demo.applitools.com/")
         step("Realizando teste de login - Selenium")
-        find("#username").sendKeys("angie")
-        find("#password").sendKeys("1234")
+        find(elements.username).sendKeys(elements.usernameValue)
+        find(elements.password).sendKeys(elements.passwordValue)
         takeScreen("Tela de login")
-        click("#log-in")
-        find(".element-header").contains("Financial Overview")
+        click(elements.loginButton)
+        find(elements.headerText).contains("Financial Overview")
     }
 
     @ParameterizedTest
