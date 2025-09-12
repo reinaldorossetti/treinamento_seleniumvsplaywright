@@ -77,7 +77,7 @@ open class BaseSelenium(var driver: WebDriver) {
      */
     fun find(cssSelector: String, focus: Boolean = false): WebElement {
         if (focus) {
-            trigger(cssSelector, "focus"); scrollIntoView(cssSelector)
+            scrollIntoView(cssSelector)
         }
         return wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(cssSelector)))!!
     }

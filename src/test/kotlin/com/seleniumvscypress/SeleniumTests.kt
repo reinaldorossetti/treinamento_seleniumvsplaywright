@@ -35,21 +35,21 @@ class SeleniumTests: BaseSelenium(BrowserConfigSelenium().setChrome()) {
     fun round2_testSelect(input: String){
         println(input)
         visit("/ingredients/select")
-        step("Realizando teste do comboxbox de seleção")
+        step("Realizando teste do comboxbox de seleção - Selenium")
         find("#spices-select-single").selectByValue(input)
     }
 
     @Test
     fun round3FileUpload(){
         visit("/ingredients/file-picker")
-        step("Realizando o upload da foto")
+        step("Realizando o upload da foto - Selenium")
         find("#photo-upload", true).sendKeys("$path/files/cypress-soh-que-nao.PNG")
     }
 
     @Test
     fun round4Iframe_CrossDomain(){
         visit("https://kitchen.applitools.com/ingredients/iframe")
-        step("Realizando a troca de iframe, ou seja pra tela do youtube para dar o clique.")
+        step("Realizando a troca de iframe, ou seja pra tela do youtube para dar o clique  - Selenium")
         frameIndex(1)
         find("button[aria-label=Reproduzir]", focus = true).click()
     }
@@ -57,7 +57,7 @@ class SeleniumTests: BaseSelenium(BrowserConfigSelenium().setChrome()) {
     @Test
     fun round5_waitForFilter(){
         visit("https://automationbookstore.dev/")
-        step("Wait for Filter")
+        step("Wait for Filter - Selenium")
         find("#pid1_author", durationMax = 5)
     }
 }

@@ -2,9 +2,11 @@ package com.seleniumvscypress
 
 import com.microsoft.playwright.FrameLocator
 import com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat
+import com.seleniumvscypress.core.model.DesafioElements
 import com.seleniumvscypress.core.BasePlaywright
 import com.seleniumvscypress.core.BrowserConfigPlaywright
 import io.qameta.allure.Allure.step
+import io.qameta.allure.Attachment
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.parallel.ResourceLock
 import org.junit.jupiter.params.ParameterizedTest
@@ -14,24 +16,26 @@ import org.testng.Assert.*
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PlaywrightTests: BasePlaywright(BrowserConfigPlaywright().setPWBrowser()) {
 
+    private val elements = DesafioElements()
+
     @AfterAll
     fun quit() {
        pw.close()
     }
 
-/*    @AfterEach
+    @AfterEach
     @Attachment(type = "image/png")
-    fun testTakeScreen() = takeScreen()*/
+    fun testTakeScreen() = takeScreen()
 
     @Test @ResourceLock(value = "resources")
     fun round1Login(){
-        pw.navigate("https://demo.applitools.com/")
+        pw.navigate(baseURLDemoSite)
         step("Realizando teste de login - Playwright")
-        pw.fill("#username","angie")
-        pw.fill("#password","1234")
-        // takeScreen("Tela de login")
-        pw.click("#log-in")
-        assertEquals(pw.locator(".element-header:nth-of-type(2)").textContent().trim(),
+        pw.fill(elements.username,"angie")
+        pw.fill(elements.password,"1234")
+        takeScreen("Tela de login")
+        pw.click(elements.loginButton)
+        assertEquals(pw.locator(elements.headerText).textContent().trim(),
             "Financial Overview")
     }
 
@@ -39,33 +43,32 @@ class PlaywrightTests: BasePlaywright(BrowserConfigPlaywright().setPWBrowser()) 
     @ValueSource(strings = ["Ginger", "Paprika", "Garlic", "Chili Powder"])
     fun round2_testSelect(input: String){
         navigate("/ingredients/select")
-        step("Realizando teste do comboxbox de seleção")
-        Assertions.assertEquals(input, selectOption("#spices-select-single", input))
+        step("Realizando teste do comboxbox de seleção - Playwright")
+        Assertions.assertEquals(input, selectOption(elements.selectSpices, input))
     }
 
     @Test
     fun round3FileUpload(){
         navigate("/ingredients/file-picker")
-        step("Realizando o upload da foto")
-        setInputFiles("#photo-upload","$path/files/cypress-soh-que-nao.PNG")
+        step("Realizando o upload da foto - Playwright")
+        setInputFiles(elements.fileUploadInput,"$path/files/cypress-soh-que-nao.PNG")
         assertThat(pw.getByText("Upload Preview")).isVisible()
     }
 
     @Test
     fun round4Iframe_CrossDomain(){
-        navigate("https://kitchen.applitools.com/ingredients/iframe")
-        step("Realizando a troca de iframe, ou seja pra tela do youtube para dar o clique.")
-        val iframeLocator: FrameLocator = pw.frameLocator("#youtube-table-cypress");
-        // Locate an element inside the iframe and interact with it
-        val button = iframeLocator.locator("button[aria-label=Reproduzir]")
+        navigate("/ingredients/iframe")
+        step("Realizando a troca de iframe, ou seja pra tela do youtube para dar o clique  - Playwright")
+        val iframeLocator: FrameLocator = pw.frameLocator(elements.iframeID)
+        val button = iframeLocator.locator(elements.youtubePlayButton)
         button.click()
         assertThat(button).not().isVisible()
     }
 
-    @Test
+/*    @Test
     fun round5_waitForFilter(){
         navigate("https://automationbookstore.dev/")
-        step("Wait for Filter")
+        step("Wait for Filter  - Playwright")
         pw.locator("#pid1_author")
-    }
+    }*/
 }

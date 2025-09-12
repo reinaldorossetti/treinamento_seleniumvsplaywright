@@ -3,6 +3,8 @@ package com.seleniumvscypress.core
 import com.microsoft.playwright.Locator
 import com.microsoft.playwright.Page
 import com.microsoft.playwright.options.LoadState
+import io.qameta.allure.Allure
+import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.InputStream
 import java.nio.file.Path
@@ -15,9 +17,11 @@ import java.nio.file.Path
 open class BasePlaywright(var pw: Page) {
 
     private val baseURL = "https://kitchen.applitools.com"
+    val baseURLDemoSite = "https://demo.applitools.com/"
     private val timeout = 30L
     val path: String = System.getProperty("user.dir")
-    private val inputStream: InputStream = File("$path\\src\\main\\kotlin\\com\\seleniumvscypress\\core\\jquery\\jquery-3.6.0.js").inputStream()
+    private val inputStream: InputStream =
+        File("$path\\src\\main\\kotlin\\com\\seleniumvscypress\\core\\jquery\\jquery-3.6.0.js").inputStream()
     private val inputString = inputStream.bufferedReader().use { it.readText() }
     var forcedClickOptions: Locator.ClickOptions = Locator.ClickOptions().setForce(true)
 
@@ -27,12 +31,13 @@ open class BasePlaywright(var pw: Page) {
     "DOMCONTENTLOADED" - wait for the DOMContentLoaded event to be fired.
     "NETWORKIDLE" - wait until there are no network connections for at least
      */
-    fun loadpw(){
+
+    fun loadpw() {
         pw.waitForLoadState(LoadState.DOMCONTENTLOADED)
     }
 
     // espera 5s somente na segunda tentativa.
-    fun sleep(value: Long = 5){
+    fun sleep(value: Long = 5) {
         val sleepValue = value * 1000
         Thread.sleep(sleepValue)
     }
@@ -42,8 +47,8 @@ open class BasePlaywright(var pw: Page) {
      * @property locator css.
      * @property retry true or false, default is false.
      */
-    fun click(locator: String, focus: Boolean = true){
-            loadpw()
+    fun click(locator: String, focus: Boolean = true) {
+        loadpw()
         if (!focus) {
             pw.click(locator)
         } else {
@@ -58,8 +63,11 @@ open class BasePlaywright(var pw: Page) {
 
      **/
     fun navigate(urlSite: String) {
-        if(urlSite.contains("https")) {  pw.navigate(urlSite) }
-        else { pw.navigate(baseURL + urlSite) }
+        if (urlSite.contains("https")) {
+            pw.navigate(urlSite)
+        } else {
+            pw.navigate(baseURL + urlSite)
+        }
     }
 
     /**
@@ -79,6 +87,18 @@ open class BasePlaywright(var pw: Page) {
     fun setInputFiles(locator: String, value: String) {
         loadpw()
         pw.locator(locator).setInputFiles(Path.of(value));
+    }
+
+    /**
+     * A função takeScreen tira a foto via selenium e anexo no reporte do allure.
+     * @param screenName passar o nome da tela ou sem vai pegar o valor padrão.
+     */
+    fun takeScreen(screenName: String = "AfterTestScreen"){
+
+        // Attaching a screenshot (assuming you have a byte array of the screenshot)
+        val screenshotBytes = (pw).screenshot() // Example: getting a screenshot from Playwright's Page object
+        Allure.addAttachment(screenName,
+            screenshotBytes.inputStream())
     }
 
 }
