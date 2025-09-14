@@ -1,10 +1,9 @@
-package com.seleniumvscypress
+package com.seleniumvsplaywright
 
 import com.seleniumvsplaywright.core.BaseSelenium
 import com.seleniumvsplaywright.core.BrowserConfigSelenium
 import com.seleniumvsplaywright.model.DesafioElements
 import io.qameta.allure.Allure.step
-import io.qameta.allure.Attachment
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.parallel.ResourceLock
 import org.junit.jupiter.params.ParameterizedTest
@@ -16,7 +15,7 @@ class SeleniumTests: BaseSelenium(BrowserConfigSelenium().setChrome()) {
     private val elements = DesafioElements()
 
     @AfterAll
-    fun quit() = driver.quit()
+    fun quit() = dv.quit()
 
     /*
     // Deixei comentado pois o print degrada a performance dos testes

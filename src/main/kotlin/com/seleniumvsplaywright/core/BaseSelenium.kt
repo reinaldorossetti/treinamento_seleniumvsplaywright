@@ -1,5 +1,6 @@
 package com.seleniumvsplaywright.core
 
+import com.seleniumvsplaywright.model.UserData
 import io.appium.java_client.pagefactory.AppiumFieldDecorator
 import io.qameta.allure.Allure
 import org.openqa.selenium.*
@@ -7,6 +8,7 @@ import org.openqa.selenium.interactions.Actions
 import org.openqa.selenium.support.PageFactory
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.Select
+import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.ui.WebDriverWait
 import java.io.ByteArrayInputStream
 import java.io.File
@@ -21,18 +23,18 @@ import kotlin.test.fail
  * Funções específicas devem esta na Page.
  * Passar o elemento mapeado sempre para a BasePage.
  */
-open class BaseSelenium(override var driver: WebDriver) : PageBaseSelenium() {
+open class BaseSelenium(final override var dv: WebDriver) : PageBaseSelenium(dv) {
 
     private val baseURL = "https://kitchen.applitools.com"
-    private val timeout = 30L
-    private var wait: WebDriverWait = WebDriverWait(driver, Duration.ofSeconds(timeout))
     val path: String = System.getProperty("user.dir")
+    val timeout = 30L
+    var wait: WebDriverWait = WebDriverWait(dv, Duration.ofSeconds(timeout))
 
     /*
     Usando o page factory do Appium client, pra definir tempo dos elementos.
      */
     init {
-        PageFactory.initElements(AppiumFieldDecorator(driver, Duration.ofSeconds(timeout)), this)
+        PageFactory.initElements(AppiumFieldDecorator(dv, Duration.ofSeconds(timeout)), this)
     }
 
     /**
@@ -40,8 +42,8 @@ open class BaseSelenium(override var driver: WebDriver) : PageBaseSelenium() {
      * @param urlSite url parcial do site.
      */
     fun visit(urlSite: String){
-        if(urlSite.contains("https")) {  driver.get(urlSite) }
-        else { driver.get(baseURL + urlSite) }
+        if(urlSite.contains("https")) {  dv.get(urlSite) }
+        else { dv.get(baseURL + urlSite) }
     }
 
     /**
@@ -50,12 +52,12 @@ open class BaseSelenium(override var driver: WebDriver) : PageBaseSelenium() {
      */
     fun click(elem: WebElement){
         val element = wait.until(ExpectedConditions.elementToBeClickable(elem))
-        Actions(driver).moveToElement(element).click().build().perform()
+        Actions(dv).moveToElement(element).click().build().perform()
     }
 
     fun click(cssSelector: String){
         val element = find(cssSelector)
-        Actions(driver).moveToElement(element).click().build().perform()
+        Actions(dv).moveToElement(element).click().build().perform()
     }
 
     /**
@@ -64,7 +66,7 @@ open class BaseSelenium(override var driver: WebDriver) : PageBaseSelenium() {
      * @param focus passar true para focar no elemento, false é o padrão.
      */
     fun find(element: WebElement, focus: Boolean = false): WebElement {
-        if (focus) Actions(driver).moveToElement(element).build().perform()
+        if (focus) Actions(dv).moveToElement(element).build().perform()
         return wait.until(ExpectedConditions.visibilityOf(element))!!
     }
 
@@ -80,13 +82,6 @@ open class BaseSelenium(override var driver: WebDriver) : PageBaseSelenium() {
         return wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(cssSelector)))!!
     }
 
-    fun find(cssSelector: String, focus: Boolean = false, durationMax: Int): WebElement {
-        val wait = WebDriverWait(driver, Duration.ofSeconds(durationMax.toLong()))
-        val elem = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(cssSelector)))!!
-        if (focus) Actions(driver).moveToElement(elem).build().perform()
-        return elem
-    }
-
     /**
      * A função find realiza busca e espera a condição do elemento ser visível.
      * @param element passa o elemento mapeado no factory.
@@ -94,7 +89,7 @@ open class BaseSelenium(override var driver: WebDriver) : PageBaseSelenium() {
      * @param focus passar true para focar no elemento, false é o padrão.
      */
     fun sendKeys(element: WebElement, text: String, focus: Boolean = false) {
-        if (focus) Actions(driver).moveToElement(element).build().perform()
+        if (focus) Actions(dv).moveToElement(element).build().perform()
         wait.until(ExpectedConditions.visibilityOf(element))?.sendKeys(text)
     }
 
@@ -118,9 +113,9 @@ open class BaseSelenium(override var driver: WebDriver) : PageBaseSelenium() {
     fun trigger(cssSelector: String, comando: String, timeout: Long = 2) {
         val inputStream: InputStream = File("$path\\src\\main\\kotlin\\com\\seleniumvscypress\\core\\jquery\\jquery-3.6.0.js").inputStream()
         val inputString = inputStream.bufferedReader().use { it.readText() }
-        (driver as JavascriptExecutor).executeScript(inputString)
+        (dv as JavascriptExecutor).executeScript(inputString)
         sleep(timeout * 1000) // tempo realizar a leitura do arquivo.
-        (driver as JavascriptExecutor).executeScript("return $('$cssSelector').trigger(\"$comando\")")
+        (dv as JavascriptExecutor).executeScript("return $('$cssSelector').trigger(\"$comando\")")
     }
 
     /**
@@ -164,7 +159,7 @@ open class BaseSelenium(override var driver: WebDriver) : PageBaseSelenium() {
      * @param element passa o elemento mapeado no factory.
      */
     fun clickJavaScript(element: WebElement) {
-        (driver as JavascriptExecutor).executeScript("arguments[0].click();", element)
+        (dv as JavascriptExecutor).executeScript("arguments[0].click();", element)
     }
 
     /**
@@ -172,7 +167,7 @@ open class BaseSelenium(override var driver: WebDriver) : PageBaseSelenium() {
      * @param element passa o elemento mapeado no factory.
      */
     fun scrollIntoView(cssSelector: String, timeout: Long = 2) {
-        (driver as JavascriptExecutor).executeScript(
+        (dv as JavascriptExecutor).executeScript(
             "document.querySelector('$cssSelector').scrollIntoView();")
         sleep(timeout * 1000) // tempo realizar o scroll.
     }
@@ -193,7 +188,7 @@ open class BaseSelenium(override var driver: WebDriver) : PageBaseSelenium() {
      */
     fun takeScreen(screenName: String = "TestScreen"){
         Allure.addAttachment(
-            screenName, ByteArrayInputStream((driver as TakesScreenshot).getScreenshotAs(OutputType.BYTES))
+            screenName, ByteArrayInputStream((dv as TakesScreenshot).getScreenshotAs(OutputType.BYTES))
         )
     }
 
@@ -202,7 +197,7 @@ open class BaseSelenium(override var driver: WebDriver) : PageBaseSelenium() {
      */
     fun alert(): Alert {
         wait.until(ExpectedConditions.alertIsPresent())
-        return driver.switchTo().alert()
+        return dv.switchTo().alert()
     }
 
     /**
@@ -213,14 +208,14 @@ open class BaseSelenium(override var driver: WebDriver) : PageBaseSelenium() {
     }
 
     fun acceptPopup() {
-        driver.switchTo().alert().accept()
+        dv.switchTo().alert().accept()
     }
 
 }
 
 /*
 fun main(){
-    val driver = BrowserConfig().setChrome()
-    val base = BasePage(driver)
+    val dv = BrowserConfig().setChrome()
+    val base = BasePage(dv)
     base.visit("/")
 }*/

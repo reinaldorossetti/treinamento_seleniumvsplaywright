@@ -1,4 +1,4 @@
-package com.seleniumvscypress
+package com.seleniumvsplaywright
 
 import com.microsoft.playwright.FrameLocator
 import com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat
@@ -6,7 +6,6 @@ import com.seleniumvsplaywright.core.BasePlaywright
 import com.seleniumvsplaywright.core.BrowserConfigPlaywright
 import com.seleniumvsplaywright.model.DesafioElements
 import io.qameta.allure.Allure.step
-import io.qameta.allure.Attachment
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.parallel.ResourceLock
 import org.junit.jupiter.params.ParameterizedTest
