@@ -1,12 +1,9 @@
-package com.seleniumvscypress.core
+package com.seleniumvsplaywright.core
 
 import com.microsoft.playwright.Locator
 import com.microsoft.playwright.Page
 import com.microsoft.playwright.options.LoadState
 import io.qameta.allure.Allure
-import java.io.ByteArrayInputStream
-import java.io.File
-import java.io.InputStream
 import java.nio.file.Path
 
 /**
@@ -23,6 +20,12 @@ open class BasePlaywright(override var pw: Page): PageBasePW() {
     "DOMCONTENTLOADED" - wait for the DOMContentLoaded event to be fired.
     "NETWORKIDLE" - wait until there are no network connections for at least
      */
+
+    val baseURL = "https://kitchen.applitools.com"
+    val baseURLDemoSite = "https://demo.applitools.com/"
+
+    val path: String = System.getProperty("user.dir")
+    var forcedClickOptions: Locator.ClickOptions = Locator.ClickOptions().setForce(true)
 
     fun loadpw() {
         pw.waitForLoadState(LoadState.DOMCONTENTLOADED)

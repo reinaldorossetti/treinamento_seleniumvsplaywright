@@ -1,4 +1,4 @@
-package com.seleniumvscypress.core.model
+package com.seleniumvsplaywright.model
 
 data class DesafioElements(
     val username: String = "#username",

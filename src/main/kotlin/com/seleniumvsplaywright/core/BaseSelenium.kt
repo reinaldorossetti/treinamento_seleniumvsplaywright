@@ -1,4 +1,4 @@
-package com.seleniumvscypress.core
+package com.seleniumvsplaywright.core
 
 import io.appium.java_client.pagefactory.AppiumFieldDecorator
 import io.qameta.allure.Allure
@@ -15,7 +15,6 @@ import java.lang.Thread.sleep
 import java.time.Duration
 import kotlin.test.fail
 
-
 /**
  * Classe BaseCore contém funções globais básicas para as pages.
  * Funções específicas devem esta na Page.
@@ -27,8 +26,6 @@ open class BaseSelenium(var driver: WebDriver) {
     private val timeout = 30L
     private var wait: WebDriverWait = WebDriverWait(driver, Duration.ofSeconds(timeout))
     val path: String = System.getProperty("user.dir")
-    private val inputStream: InputStream = File("$path\\src\\main\\kotlin\\com\\seleniumvscypress\\core\\jquery\\jquery-3.6.0.js").inputStream()
-    private val inputString = inputStream.bufferedReader().use { it.readText() }
 
     /*
     Usando o page factory do Appium client, pra definir tempo dos elementos.
@@ -118,6 +115,8 @@ open class BaseSelenium(var driver: WebDriver) {
      * @param comando passar o evento que deseja fazer o trigger.
      */
     fun trigger(cssSelector: String, comando: String, timeout: Long = 2) {
+        val inputStream: InputStream = File("$path\\src\\main\\kotlin\\com\\seleniumvscypress\\core\\jquery\\jquery-3.6.0.js").inputStream()
+        val inputString = inputStream.bufferedReader().use { it.readText() }
         (driver as JavascriptExecutor).executeScript(inputString)
         sleep(timeout * 1000) // tempo realizar a leitura do arquivo.
         (driver as JavascriptExecutor).executeScript("return $('$cssSelector').trigger(\"$comando\")")

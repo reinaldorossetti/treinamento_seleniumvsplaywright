@@ -1,4 +1,4 @@
-package com.seleniumvscypress.core.model
+package com.seleniumvsplaywright.model
 
 data class FeatureLogin(
     val inputUsername: String = "#user-name",

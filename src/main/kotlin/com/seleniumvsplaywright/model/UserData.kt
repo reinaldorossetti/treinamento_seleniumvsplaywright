@@ -1,4 +1,4 @@
-package com.seleniumvscypress.core.model
+package com.seleniumvsplaywright.model
 
 data class UserData(
     val username: String = "standard_user",

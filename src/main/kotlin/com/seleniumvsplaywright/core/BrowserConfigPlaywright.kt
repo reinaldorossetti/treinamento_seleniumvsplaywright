@@ -1,4 +1,4 @@
-package com.seleniumvscypress.core
+package com.seleniumvsplaywright.core
 
 import com.microsoft.playwright.*
 import org.testng.annotations.*

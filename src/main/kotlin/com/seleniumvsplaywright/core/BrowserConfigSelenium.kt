@@ -1,4 +1,4 @@
-package com.seleniumvscypress.core
+package com.seleniumvsplaywright.core
 
 import org.openqa.selenium.PageLoadStrategy
 import org.openqa.selenium.WebDriver

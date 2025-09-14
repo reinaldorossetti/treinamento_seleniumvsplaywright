@@ -1,13 +1,10 @@
 package com.seleniumvscypress
 
 import com.microsoft.playwright.FrameLocator
-import com.microsoft.playwright.Page
 import com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat
-import com.seleniumvscypress.core.BasePlaywright
-import com.seleniumvscypress.core.BrowserConfigPlaywright
-import com.seleniumvscypress.core.model.DesafioElements
-import com.seleniumvscypress.core.model.FeatureLogin
-import com.seleniumvscypress.core.model.UserData
+import com.seleniumvsplaywright.core.BasePlaywright
+import com.seleniumvsplaywright.core.BrowserConfigPlaywright
+import com.seleniumvsplaywright.model.DesafioElements
 import io.qameta.allure.Allure.step
 import io.qameta.allure.Attachment
 import org.junit.jupiter.api.*
@@ -21,17 +18,16 @@ import org.testng.annotations.AfterTest
 class PlaywrightTests: BasePlaywright(BrowserConfigPlaywright().setPWBrowser()) {
 
     private val elements = DesafioElements()
-    private val login = FeatureLogin()
-    private val userData = UserData()
 
     @AfterTest
     fun quit() {
        pw.close()
     }
 
-    @AfterEach
+/*    @AfterEach
     @Attachment(type = "image/png")
     fun testTakeScreen() = takeScreen()
+*/
 
     @Test @ResourceLock(value = "resources")
     fun round1Login(){

@@ -1,8 +1,8 @@
 package com.seleniumvscypress
 
-import com.seleniumvscypress.core.BaseSelenium
-import com.seleniumvscypress.core.BrowserConfigSelenium
-import com.seleniumvscypress.core.model.DesafioElements
+import com.seleniumvsplaywright.core.BaseSelenium
+import com.seleniumvsplaywright.core.BrowserConfigSelenium
+import com.seleniumvsplaywright.model.DesafioElements
 import io.qameta.allure.Allure.step
 import io.qameta.allure.Attachment
 import org.junit.jupiter.api.*
