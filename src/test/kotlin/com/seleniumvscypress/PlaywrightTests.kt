@@ -24,7 +24,9 @@ class PlaywrightTests: BasePlaywright(BrowserConfigPlaywright().setPWBrowser()) 
        pw.close()
     }
 
-/*    @AfterEach
+/*
+// Deixei comentado pois o print degrada a performance dos testes
+    @AfterEach
     @Attachment(type = "image/png")
     fun testTakeScreen() = takeScreen()
 */
@@ -46,7 +48,7 @@ class PlaywrightTests: BasePlaywright(BrowserConfigPlaywright().setPWBrowser()) 
     fun round2_testSelect(input: String){
         navigate("/ingredients/select")
         step("Realizando teste do comboxbox de seleção - Playwright")
-        Assertions.assertEquals(input, selectOption(elements.selectSpices, input))
+        assertEquals(input, selectOption(elements.selectSpices, input))
     }
 
     @Test
