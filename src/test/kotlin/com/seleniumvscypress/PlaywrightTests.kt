@@ -1,24 +1,30 @@
 package com.seleniumvscypress
 
 import com.microsoft.playwright.FrameLocator
+import com.microsoft.playwright.Page
 import com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat
-import com.seleniumvscypress.core.model.DesafioElements
 import com.seleniumvscypress.core.BasePlaywright
 import com.seleniumvscypress.core.BrowserConfigPlaywright
+import com.seleniumvscypress.core.model.DesafioElements
+import com.seleniumvscypress.core.model.FeatureLogin
+import com.seleniumvscypress.core.model.UserData
 import io.qameta.allure.Allure.step
 import io.qameta.allure.Attachment
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.parallel.ResourceLock
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import org.testng.Assert.*
+import org.testng.Assert.assertEquals
+import org.testng.annotations.AfterTest
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PlaywrightTests: BasePlaywright(BrowserConfigPlaywright().setPWBrowser()) {
 
     private val elements = DesafioElements()
+    private val login = FeatureLogin()
+    private val userData = UserData()
 
-    @AfterAll
+    @AfterTest
     fun quit() {
        pw.close()
     }
@@ -65,10 +71,4 @@ class PlaywrightTests: BasePlaywright(BrowserConfigPlaywright().setPWBrowser()) 
         assertThat(button).not().isVisible()
     }
 
-/*    @Test
-    fun round5_waitForFilter(){
-        navigate("https://automationbookstore.dev/")
-        step("Wait for Filter  - Playwright")
-        pw.locator("#pid1_author")
-    }*/
 }

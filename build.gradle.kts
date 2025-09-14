@@ -21,9 +21,9 @@ dependencies {
     implementation("com.google.code.gson:gson:2.8.9")
     implementation("org.hamcrest:hamcrest:2.2")
     // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.8.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.11.0")
     testImplementation("org.junit.platform:junit-platform-launcher:1.8.2")
 // https://mvnrepository.com/artifact/org.testng/testng
     implementation("org.testng:testng:7.11.0")

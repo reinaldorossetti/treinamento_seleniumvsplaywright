@@ -14,16 +14,8 @@ import java.nio.file.Path
  * Funções específicas devem esta na pw.
  * Passar o elemento mapeado sempre para a Basepw.
  */
-open class BasePlaywright(var pw: Page) {
+open class BasePlaywright(override var pw: Page): PageBasePW() {
 
-    private val baseURL = "https://kitchen.applitools.com"
-    val baseURLDemoSite = "https://demo.applitools.com/"
-    private val timeout = 30L
-    val path: String = System.getProperty("user.dir")
-    private val inputStream: InputStream =
-        File("$path\\src\\main\\kotlin\\com\\seleniumvscypress\\core\\jquery\\jquery-3.6.0.js").inputStream()
-    private val inputString = inputStream.bufferedReader().use { it.readText() }
-    var forcedClickOptions: Locator.ClickOptions = Locator.ClickOptions().setForce(true)
 
     /**
      * A funcao loadpw espera a página carregar por completo.
@@ -52,9 +44,9 @@ open class BasePlaywright(var pw: Page) {
         if (!focus) {
             pw.click(locator)
         } else {
+            pw.locator(locator).focus()
             pw.locator(locator).click(forcedClickOptions)
         }
-
     }
 
     /**

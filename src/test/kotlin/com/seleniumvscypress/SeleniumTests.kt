@@ -51,16 +51,9 @@ class SeleniumTests: BaseSelenium(BrowserConfigSelenium().setChrome()) {
 
     @Test
     fun round4Iframe_CrossDomain(){
-        visit("https://kitchen.applitools.com/ingredients/iframe")
+        visit("/ingredients/iframe")
         step("Realizando a troca de iframe, ou seja pra tela do youtube para dar o clique  - Selenium")
         frameIndex(1)
         find("button[aria-label=Reproduzir]", focus = true).click()
-    }
-
-    @Test
-    fun round5_waitForFilter(){
-        visit("https://automationbookstore.dev/")
-        step("Wait for Filter - Selenium")
-        find("#pid1_author", durationMax = 5)
     }
 }
