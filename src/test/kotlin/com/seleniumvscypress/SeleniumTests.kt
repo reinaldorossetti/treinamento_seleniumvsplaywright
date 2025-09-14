@@ -18,9 +18,12 @@ class SeleniumTests: BaseSelenium(BrowserConfigSelenium().setChrome()) {
     @AfterAll
     fun quit() = driver.quit()
 
-    @AfterEach
-    @Attachment(type = "image/png")
-    fun testTakeScreen() = takeScreen()
+    /*
+    // Deixei comentado pois o print degrada a performance dos testes
+        @AfterEach
+        @Attachment(type = "image/png")
+        fun testTakeScreen() = takeScreen()
+    */
 
     @Test @ResourceLock(value = "resources")
     fun round1Login(){

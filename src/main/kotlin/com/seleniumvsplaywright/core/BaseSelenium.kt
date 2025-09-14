@@ -15,12 +15,13 @@ import java.lang.Thread.sleep
 import java.time.Duration
 import kotlin.test.fail
 
+
 /**
  * Classe BaseCore contém funções globais básicas para as pages.
  * Funções específicas devem esta na Page.
  * Passar o elemento mapeado sempre para a BasePage.
  */
-open class BaseSelenium(var driver: WebDriver) {
+open class BaseSelenium(override var driver: WebDriver) : PageBaseSelenium() {
 
     private val baseURL = "https://kitchen.applitools.com"
     private val timeout = 30L
@@ -209,6 +210,10 @@ open class BaseSelenium(var driver: WebDriver) {
      */
     fun frameIndex(frameid: Int) {
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameid))
+    }
+
+    fun acceptPopup() {
+        driver.switchTo().alert().accept()
     }
 
 }
