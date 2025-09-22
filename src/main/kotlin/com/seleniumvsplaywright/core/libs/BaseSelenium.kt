@@ -212,7 +212,7 @@ open class BaseSelenium(final override var dv: WebDriver) : PageBaseSelenium(dv)
 
     fun closeBrowser() {
         try {
-            dv.close()
+            dv.quit()
         } catch (Exception: Exception) {
             println("Não foi possível fechar o browser: ${Exception.message}")
         }
