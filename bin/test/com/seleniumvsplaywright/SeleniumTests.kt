@@ -1,7 +1,7 @@
 package com.seleniumvsplaywright
 
-import com.seleniumvsplaywright.core.BaseSelenium
-import com.seleniumvsplaywright.core.BrowserConfigSelenium
+import com.seleniumvsplaywright.core.libs.BaseSelenium
+import com.seleniumvsplaywright.core.config.BrowserConfigSelenium
 import com.seleniumvsplaywright.model.DesafioElements
 import io.qameta.allure.Allure.step
 import org.junit.jupiter.api.*

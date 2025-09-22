@@ -1,7 +1,7 @@
 package com.seleniumvsplaywright
 
-import com.seleniumvsplaywright.core.BasePlaywright
-import com.seleniumvsplaywright.core.BrowserConfigPlaywright
+import com.seleniumvsplaywright.core.libs.BasePlaywright
+import com.seleniumvsplaywright.core.config.BrowserConfigPlaywright
 import com.seleniumvsplaywright.model.FeatureLogin
 import com.seleniumvsplaywright.model.UserData
 import io.qameta.allure.Allure.step

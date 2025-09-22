@@ -1,4 +1,4 @@
-package com.seleniumvsplaywright.core
+package com.seleniumvsplaywright.core.config
 
 import org.openqa.selenium.PageLoadStrategy
 import org.openqa.selenium.WebDriver

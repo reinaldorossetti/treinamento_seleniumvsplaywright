@@ -2,8 +2,8 @@ package com.seleniumvsplaywright
 
 import com.microsoft.playwright.FrameLocator
 import com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat
-import com.seleniumvsplaywright.core.BasePlaywright
-import com.seleniumvsplaywright.core.BrowserConfigPlaywright
+import com.seleniumvsplaywright.core.libs.BasePlaywright
+import com.seleniumvsplaywright.core.config.BrowserConfigPlaywright
 import com.seleniumvsplaywright.model.DesafioElements
 import io.qameta.allure.Allure.step
 import org.junit.jupiter.api.*
@@ -19,9 +19,7 @@ class PlaywrightTests: BasePlaywright(BrowserConfigPlaywright().setPWBrowser()) 
     private val elements = DesafioElements()
 
     @AfterTest
-    fun quit() {
-       pw.close()
-    }
+    fun quit() = pw.close()
 
 /*
 // Deixei comentado pois o print degrada a performance dos testes
@@ -30,7 +28,7 @@ class PlaywrightTests: BasePlaywright(BrowserConfigPlaywright().setPWBrowser()) 
     fun testTakeScreen() = takeScreen()
 */
 
-    @Test @ResourceLock(value = "resources")
+    @Test
     fun round1Login(){
         pw.navigate(baseURLDemoSite)
         step("Realizando teste de login - Playwright")

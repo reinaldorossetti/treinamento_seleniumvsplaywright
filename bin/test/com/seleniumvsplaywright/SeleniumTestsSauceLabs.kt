@@ -1,7 +1,7 @@
 package com.seleniumvsplaywright
 
-import com.seleniumvsplaywright.core.BaseSelenium
-import com.seleniumvsplaywright.core.BrowserConfigSelenium
+import com.seleniumvsplaywright.core.libs.BaseSelenium
+import com.seleniumvsplaywright.core.config.BrowserConfigSelenium
 import com.seleniumvsplaywright.model.FeatureLogin
 import com.seleniumvsplaywright.model.UserData
 import io.qameta.allure.Allure.step
@@ -25,9 +25,12 @@ class SeleniumTestsSauceLabs: BaseSelenium(BrowserConfigSelenium().setChrome()) 
     @AfterAll
     fun quitAll() = dv.quit()
 
-/*    @AfterEach
-    @Attachment(type = "image/png")
-    fun testTakeScreen() = takeScreen()*/
+    /*
+    // Deixei comentado pois o print degrada a performance dos testes
+        @AfterEach
+        @Attachment(type = "image/png")
+        fun testTakeScreen() = takeScreen()
+    */
 
     @ParameterizedTest
     @CsvFileSource(resources = arrayOf("/links.csv"), numLinesToSkip = 1)

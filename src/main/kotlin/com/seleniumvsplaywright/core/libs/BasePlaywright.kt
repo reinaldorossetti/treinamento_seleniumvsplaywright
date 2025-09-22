@@ -1,4 +1,4 @@
-package com.seleniumvsplaywright.core
+package com.seleniumvsplaywright.core.libs
 
 import com.microsoft.playwright.Locator
 import com.microsoft.playwright.Page

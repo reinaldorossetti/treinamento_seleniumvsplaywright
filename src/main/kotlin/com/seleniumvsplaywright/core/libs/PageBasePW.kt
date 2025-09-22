@@ -1,5 +1,4 @@
-package com.seleniumvsplaywright.core
-import com.microsoft.playwright.Locator
+package com.seleniumvsplaywright.core.libs
 import com.microsoft.playwright.Page
 import com.seleniumvsplaywright.model.FeatureLogin
 import com.seleniumvsplaywright.model.UserData

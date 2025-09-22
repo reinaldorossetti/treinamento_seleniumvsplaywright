@@ -1,10 +1,8 @@
-package com.seleniumvsplaywright.core
+package com.seleniumvsplaywright.core.libs
 import com.seleniumvsplaywright.model.FeatureLogin
 import com.seleniumvsplaywright.model.UserData
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
-import org.openqa.selenium.support.ui.WebDriverWait
-import java.time.Duration
 
 open class PageBaseSelenium(open val dv: WebDriver) {
 

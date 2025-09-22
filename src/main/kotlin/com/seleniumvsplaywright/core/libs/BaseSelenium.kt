@@ -1,6 +1,5 @@
-package com.seleniumvsplaywright.core
+package com.seleniumvsplaywright.core.libs
 
-import com.seleniumvsplaywright.model.UserData
 import io.appium.java_client.pagefactory.AppiumFieldDecorator
 import io.qameta.allure.Allure
 import org.openqa.selenium.*

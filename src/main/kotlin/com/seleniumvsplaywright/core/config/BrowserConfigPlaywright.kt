@@ -1,4 +1,4 @@
-package com.seleniumvsplaywright.core
+package com.seleniumvsplaywright.core.config
 
 import com.microsoft.playwright.*
 import org.testng.annotations.*
