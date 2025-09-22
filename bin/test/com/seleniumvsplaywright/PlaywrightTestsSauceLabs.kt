@@ -23,21 +23,21 @@ class PlaywrightTestsSauceLabs: BasePlaywright(BrowserConfigPlaywright().setPWBr
     }
 
     @AfterAll
-    fun quit() = pw.close()
+    fun quit() {
+       pw.close()
+    }
 
-    /*
-    // Deixei comentado pois o print degrada a performance dos testes
-        @AfterEach
-        @Attachment(type = "image/png")
-        fun testTakeScreen() = takeScreen()
-    */
+/*    @AfterEach
+    @Attachment(type = "image/png")
+    fun testTakeScreen() = takeScreen()*/
 
     @ParameterizedTest
     @CsvFileSource(resources = arrayOf("/links.csv"), numLinesToSkip = 1)
     fun round5_links(type: String, urlSite: String){
         step("Checks that social links open in a new tab  - Playwright")
         val newTab = pw.context().waitForPage {
-            pw.context().pages()[0].bringToFront()
+            val newActivePage = pw.context().pages()[0]
+            newActivePage.bringToFront()
             click(".social_${type} a", true)
         }
         assertEquals(newTab.url(), urlSite)
