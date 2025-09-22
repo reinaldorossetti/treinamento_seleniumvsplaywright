@@ -6,6 +6,8 @@ import com.seleniumvsplaywright.model.FeatureLogin
 import com.seleniumvsplaywright.model.UserData
 import io.qameta.allure.Allure.step
 import org.junit.jupiter.api.*
+import org.junit.jupiter.api.parallel.Execution
+import org.junit.jupiter.api.parallel.ExecutionMode
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvFileSource
 import org.testng.Assert.assertEquals

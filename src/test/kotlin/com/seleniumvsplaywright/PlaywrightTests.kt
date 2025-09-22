@@ -19,7 +19,7 @@ class PlaywrightTests: BasePlaywright(BrowserConfigPlaywright().setPWBrowser()) 
     private val elements = DesafioElements()
 
     @AfterTest
-    fun quit() = pw.close()
+    fun quit() = closeBrowser()
 
 /*
 // Deixei comentado pois o print degrada a performance dos testes

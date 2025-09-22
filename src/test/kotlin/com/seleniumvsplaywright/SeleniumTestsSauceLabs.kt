@@ -23,7 +23,7 @@ class SeleniumTestsSauceLabs: BaseSelenium(BrowserConfigSelenium().setChrome()) 
     }
 
     @AfterAll
-    fun quitAll() = dv.quit()
+    fun quitAll() = closeBrowser()
 
     /*
     // Deixei comentado pois o print degrada a performance dos testes

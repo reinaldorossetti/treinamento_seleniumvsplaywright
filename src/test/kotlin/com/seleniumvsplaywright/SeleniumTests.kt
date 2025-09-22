@@ -15,7 +15,7 @@ class SeleniumTests: BaseSelenium(BrowserConfigSelenium().setChrome()) {
     private val elements = DesafioElements()
 
     @AfterAll
-    fun quit() = dv.quit()
+    fun quit() = closeBrowser()
 
     /*
     // Deixei comentado pois o print degrada a performance dos testes

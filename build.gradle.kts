@@ -61,13 +61,15 @@ tasks.test {
     useJUnitPlatform()
     // Configuration parameters to execute top-level classes in parallel but methods in same thread
     systemProperties["junit.jupiter.execution.parallel.enabled"] = true
+    systemProperties["junit.jupiter.execution.parallel.config.strategy"]= "dynamic"
     systemProperties["junit.jupiter.execution.parallel.mode.default"] = "concurrent"
-    maxParallelForks = Runtime.getRuntime().availableProcessors() -1
+    systemProperties["junit.jupiter.execution.parallel.mode.classes.default"] = "concurrent"
+
     testLogging {
         events(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
         exceptionFormat = TestExceptionFormat.SHORT
         showCauses = true
-        showExceptions = true
-        showStackTraces = true
+        showExceptions = false
+        showStackTraces = false
     }
 }

@@ -96,6 +96,14 @@ open class BasePlaywright(override var pw: Page): PageBasePW() {
             screenshotBytes.inputStream())
     }
 
+    fun closeBrowser(){
+        try {
+            pw.close()
+        } catch (Exception: Exception) {
+            println("Erro ao fechar o browser: ${Exception.message}")
+        }
+    }
+
 }
 
 /*
