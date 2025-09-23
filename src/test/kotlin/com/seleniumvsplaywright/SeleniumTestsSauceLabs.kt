@@ -42,6 +42,6 @@ class SeleniumTestsSauceLabs: BaseSelenium(BrowserConfigSelenium().setChrome()) 
         click(".social_${type} a")
         val newWindow = dv.windowHandles.last()
         dv.switchTo().window(newWindow)
-        assertEquals(urlSite, dv.currentUrl)
+        assertEquals(dv.currentUrl, urlSite)
     }
 }
