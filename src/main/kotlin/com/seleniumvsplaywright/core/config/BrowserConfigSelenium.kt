@@ -8,7 +8,7 @@ import java.time.Duration
 
 class BrowserConfigSelenium() {
 
-    private val timeout = 300L
+    private val timeout = 3000L
     val path: String = System.getProperty("user.dir")
 
     fun setChrome(): WebDriver {
