@@ -13,8 +13,9 @@ class BrowserConfigSelenium() {
 
     fun setChrome(): WebDriver {
         val chromeOptions = ChromeOptions().apply {
-           setPageLoadStrategy(PageLoadStrategy.NORMAL)
+            setPageLoadStrategy(PageLoadStrategy.NORMAL)
             setAcceptInsecureCerts(true)
+            setHeadless(true)
             addArguments("--no-sandbox")
             addArguments("--remote-allow-origins=*")
             addArguments("--disable-popup-blocking")
@@ -34,8 +35,8 @@ class BrowserConfigSelenium() {
 }
 
 
-fun main(){
+/*fun main(){
     val driver = BrowserConfigSelenium().setChrome()
     driver.get("https://www.google.com")
-}
+}*/
 
