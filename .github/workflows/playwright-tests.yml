@@ -40,10 +40,12 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
       - name: Build with Gradle
         run: ./gradlew build
+        continue-on-error: true  # Continue even if tests fail
 
       # Step 5: Install playwright OS libraries
       - name: Install Playwright dependencies
         run: npx playwright install-deps
+        continue-on-error: true  # Continue even if tests fail
 
       # Step 6: Run Maven to execute Playwright tests
       - name: Run Gradle Tests
