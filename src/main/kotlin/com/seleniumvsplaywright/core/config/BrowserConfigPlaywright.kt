@@ -20,9 +20,7 @@ class BrowserConfigPlaywright{
         Playwright.create().use { playwright ->
 
             val browserName = System.getenv("BROWSER")
-            if (browserName == "chromium") {
-                browser = playwright.chromium().launch()
-            } else if (browserName == "firefox") {
+            if (browserName == "firefox") {
                 browser = playwright.firefox().launch()
             } else if (browserName == "webkit") {
                 browser = playwright.webkit().launch()

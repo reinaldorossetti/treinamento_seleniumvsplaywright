@@ -10,6 +10,8 @@ uma plataforma e interface de codificação neutra de linguagem compatível com 
 Para rodar via linha de comando:
 ````
 ./gradlew clean test
+npx playwright@1.55.0 install
+
 ````
 
 ### Round 01.
@@ -172,3 +174,5 @@ https://www.youtube.com/embed/gGjHkR0lrAQ
 
 Paralelismo com Junit 5:
 https://www.baeldung.com/junit-5-parallel-tests
+
+
