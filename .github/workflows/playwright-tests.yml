@@ -1,0 +1,90 @@
+name: "testes regressivos"
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - 'releases/*'
+  workflow_dispatch:
+  schedule:
+    - cron: '30 23 * * *'
+
+jobs:
+  test-linux:
+    name: Playwright@${{ matrix.browser}} ${{ matrix.os }} headless=${{ matrix.headless }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-2022]
+        #playwright: [1.12.0]
+        #headless: [false]
+        browser: [chromium]
+    runs-on: ${{ matrix.os }}
+    steps:
+      # Step 1: Check out the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Step 2: Set up JDK 17 (adjust if you're using a different version)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          cache: 'gradle'
+
+      - name: Install playwright install-deps
+        run: npx playwright install-deps
+        continue-on-error: true  # Continue even if tests fail
+
+      - name: Install allure-commandline
+        run: npm install -g allure-commandline --save-dev
+        continue-on-error: true  # Continue even if tests fail
+
+      - uses: actions/checkout@v2
+      - uses: microsoft/playwright-github-action@v1.5.0
+      - name: Install Media Pack
+        if: matrix.os == 'windows-latest'
+        shell: powershell
+        run: Install-WindowsFeature Server-Media-Foundation
+
+      # Step 3: Cache Gradle dependencies
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      # Step 4: Setup Gradle
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Build with Gradle
+        run: ./gradlew build -x test
+        continue-on-error: true  # Continue even if tests fail
+
+      # Step 6: Run Maven to execute Playwright tests
+      - name: Run Gradle Tests
+        run: ./gradlew test
+        continue-on-error: true  # Continue even if tests fail
+        env:
+          BROWSER: chromium
+          BROWSER_CHANNEL: ${{ matrix.browser-channel }}
+      - name: 📊 Step 5 - Collect Allure files and generate allure-report folder
+        run: |
+          allure generate ./build/allure-results -o allure-report/
+      - name: 🎁 Step 6 - Publishing Allure artifact to GitHub Actions
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report
+
+      - name: Deploy
+        if: always()  # Ensure this step runs even if tests fail
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages  # default: gh-pages
+          publish_dir: allure-report
+          destination_dir: ${{ matrix.browser}}
