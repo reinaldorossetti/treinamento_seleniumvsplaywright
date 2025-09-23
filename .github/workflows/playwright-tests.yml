@@ -1,0 +1,66 @@
+name: Playwright Tests
+
+# Trigger the workflow on every push to any branch
+on:
+  push:
+    branches:
+      - '**'  # Run on every branch for every commit
+  pull_request:
+    branches:
+      - '**'  # Run on every pull request for any branch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Step 2: Set up JDK 17 (adjust if you're using a different version)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      # Step 3: Setup Gradle
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      # Step 4: Install playwright OS libraries
+      - name: Install Playwright dependencies
+        run: npx playwright install-deps
+
+      # Step 5: Cache Gradle dependencies
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # Step 6: Run Maven to execute Playwright tests
+      - name: Run Gradle Tests
+        run: ./gradlew test
+        continue-on-error: true  # Continue even if tests fail
+
+      # Step 7: Archive any trace files
+      - name: Archive trace files
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: traces
+          path: build/traces/*.zip
+
+      # Step 8: Deploy Allure report to GitHub Pages
+      - name: Deploy Allure Report to GitHub Pages
+        if: always()  # Ensure this step runs even if tests fail
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public

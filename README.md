@@ -173,4 +173,5 @@ https://www.selenium.dev/documentation/webdriver/actions_api/mouse/
 Primeira Aula - Realizando a Pesquisar:  
 https://www.youtube.com/embed/gGjHkR0lrAQ
 
-
+Paralelismo com Junit 5:
+https://www.baeldung.com/junit-5-parallel-tests

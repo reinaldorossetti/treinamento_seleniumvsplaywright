@@ -32,7 +32,7 @@ dependencies {
     testImplementation("io.rest-assured:kotlin-extensions:4.4.0")
     testImplementation("io.rest-assured:json-schema-validator:4.4.0")
     testImplementation("com.github.javafaker:javafaker:1.0.2")
-    testImplementation("io.qameta.allure:allure-junit5:2.17.1")
+    testImplementation("io.qameta.allure:allure-junit5:2.20.1")
     implementation("io.qameta.allure:allure-okhttp3:2.16.1")
 
     testImplementation("io.qameta.allure:allure-kotlin-model:2.2.7")
@@ -53,12 +53,13 @@ dependencies {
 }
 
 allure {
-    version = "2.17.1"
-    downloadLinkFormat = "https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.17.1/allure-commandline-2.17.1.zip"
+    version = "2.20.1"
+    downloadLinkFormat = "https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.20.1/allure-commandline-2.20.1.zip"
 }
 
 tasks.test {
     useJUnitPlatform()
+
     // Configuration parameters to execute top-level classes in parallel but methods in same thread
     systemProperties["junit.jupiter.execution.parallel.enabled"] = true
     systemProperties["junit.jupiter.execution.parallel.config.strategy"]= "dynamic"
