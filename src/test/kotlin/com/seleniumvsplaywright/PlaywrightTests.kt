@@ -7,6 +7,7 @@ import com.seleniumvsplaywright.core.config.BrowserConfigPlaywright
 import com.seleniumvsplaywright.core.libs.BasePlaywright
 import com.seleniumvsplaywright.model.DesafioElements
 import io.qameta.allure.Allure.step
+import io.qameta.allure.Attachment
 import org.junit.jupiter.api.*
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -21,12 +22,10 @@ class PlaywrightTests: BasePlaywright(BrowserConfigPlaywright().setPWBrowser()) 
     @AfterTest
     fun quit() = closeBrowser()
 
-/*
 // Deixei comentado pois o print degrada a performance dos testes
     @AfterEach
     @Attachment(type = "image/png")
     fun testTakeScreen() = takeScreen()
-*/
 
     @Test
     fun round1Login(){
