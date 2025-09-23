@@ -72,7 +72,7 @@ jobs:
 
       # Step 6: Run Maven to execute Playwright tests
       - name: Run Gradle Tests
-        run: ./gradlew test --debug
+        run: ./gradlew test
         continue-on-error: true  # Continue even if tests fail
         env:
           BROWSER: chromium

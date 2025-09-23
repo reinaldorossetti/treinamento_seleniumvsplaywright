@@ -30,7 +30,7 @@ class BrowserConfigPlaywright{
                     .create()
                     .chromium()
                     .launch(BrowserType.LaunchOptions()
-                        .setHeadless(false)
+                        .setHeadless(true)
                         .setArgs(
                             (Arrays.asList("--no-sandbox",
                                 "--disable-extensions",
@@ -40,7 +40,10 @@ class BrowserConfigPlaywright{
                     )
 //                )
             }
-            return browser.newPage()
+            val newPage = browser.newPage()
+            newPage.setDefaultTimeout(30000.0)
+            newPage.setDefaultNavigationTimeout(30000.0)
+            return newPage
         }
     }
 

@@ -41,7 +41,10 @@ open class BaseSelenium(final override var dv: WebDriver) : PageBaseSelenium(dv)
      * @param urlSite url parcial do site.
      */
     fun visit(urlSite: String){
-        if(urlSite.contains("https")) {  dv.get(urlSite) }
+        if(urlSite.contains("https")) {
+            dv.get(urlSite)
+            dv.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(timeout))
+        }
         else { dv.get(baseURL + urlSite) }
     }
 
@@ -75,7 +78,10 @@ open class BaseSelenium(final override var dv: WebDriver) : PageBaseSelenium(dv)
      * @param focus passar true para focar no elemento, false é o padrão.
      */
     fun find(cssSelector: String, focus: Boolean = false): WebElement {
-        if (focus) {
+        try {
+            return wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(cssSelector)))!!
+        } catch (exception: Exception) {
+            println("Elemento não encontrado para realizar o scroll: $cssSelector")
             scrollIntoView(cssSelector)
         }
         return wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(cssSelector)))!!
@@ -167,7 +173,7 @@ open class BaseSelenium(final override var dv: WebDriver) : PageBaseSelenium(dv)
      */
     fun scrollIntoView(cssSelector: String, timeout: Long = 2) {
         (dv as JavascriptExecutor).executeScript(
-            "document.querySelector('$cssSelector').scrollIntoView();")
+            "document.querySelector('$cssSelector').scrollIntoView();", 1000)
         sleep(timeout * 1000) // tempo realizar o scroll.
     }
 
