@@ -32,7 +32,10 @@ class BrowserConfigPlaywright{
                     .launch(BrowserType.LaunchOptions()
                         .setHeadless(false)
                         .setArgs(
-                            (Arrays.asList("--no-sandbox", "--disable-extensions", "--disable-gpu", "--remote-allow-origins=*"))
+                            (Arrays.asList("--no-sandbox",
+                                "--disable-extensions",
+                                "--disable-gpu",
+                                "--remote-allow-origins=*"))
                         )
                     )
 //                )

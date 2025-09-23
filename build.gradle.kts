@@ -70,11 +70,9 @@ application {
     mainClass.set("com.microsoft.playwright.CLI")
 }
 
-// build.gradle.kts
-// Usage: gradle playwright --args="help"
-tasks.register<JavaExec>("playwright") {
-    classpath(sourceSets["test"].runtimeClasspath)
-    mainClass.set("com.microsoft.playwright.CLI")
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 tasks.test {
