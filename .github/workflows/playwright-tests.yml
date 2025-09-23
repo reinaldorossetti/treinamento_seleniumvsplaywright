@@ -8,6 +8,7 @@ on:
   pull_request:
     branches:
       - '**'  # Run on every pull request for any branch
+permissions: write-all
 
 jobs:
   test:
@@ -42,7 +43,7 @@ jobs:
 
       # Step 5: Cache Gradle dependencies
       - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+        run: chmod +x ./gradlew
 
       # Step 6: Run Maven to execute Playwright tests
       - name: Run Gradle Tests
