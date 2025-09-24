@@ -5,15 +5,14 @@ Selenium WebDriver é um projeto abrangente que encapsula uma variedade de ferra
 O Selenium fornece especificamente uma infraestrutura para a especificação W3C WebDriver - 
 uma plataforma e interface de codificação neutra de linguagem compatível com todos os principais navegadores da Web.
 
-<<<<<<< HEAD
+### Adicionei a função step para inserir um passo no nosso relatório do allure, mas não faz parte da brincadeira esse step.
 
-Adicionei a função step para inserir um passo no nosso relatório do allure, mas não faz parte da brincadeira esse step.
-=======
 Para rodar via linha de comando:
 ````
 ./gradlew clean test
+npx playwright@1.55.0 install
+
 ````
->>>>>>> 6e5bbb46b7d4aed4b0b3d5134e9c7781a4536a70
 
 ### Round 01.
 Selenium Kotlin
@@ -175,3 +174,5 @@ https://www.youtube.com/embed/gGjHkR0lrAQ
 
 Paralelismo com Junit 5:
 https://www.baeldung.com/junit-5-parallel-tests
+
+

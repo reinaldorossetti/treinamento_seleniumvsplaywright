@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 
 plugins {
+    application
     kotlin("jvm") version "1.7.0"
     id("io.qameta.allure") version "2.8.1"
     id("org.gradle.test-retry") version "1.3.1"
@@ -57,6 +58,23 @@ allure {
     downloadLinkFormat = "https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.20.1/allure-commandline-2.20.1.zip"
 }
 
+// Usage: ./gradlew playwright --args="help"
+tasks.register<JavaExec>("playwright") {
+    classpath(sourceSets["test"].runtimeClasspath)
+    mainClass.set("com.microsoft.playwright.CLI")
+}
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "17"
+}
+application {
+    mainClass.set("com.microsoft.playwright.CLI")
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
 tasks.test {
     useJUnitPlatform()
 
@@ -70,7 +88,8 @@ tasks.test {
         events(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
         exceptionFormat = TestExceptionFormat.SHORT
         showCauses = true
-        showExceptions = false
-        showStackTraces = false
+        showExceptions = true
+        showStackTraces = true
     }
+
 }

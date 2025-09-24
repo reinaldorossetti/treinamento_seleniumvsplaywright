@@ -56,6 +56,6 @@ class SeleniumTests: BaseSelenium(BrowserConfigSelenium().setChrome()) {
         visit("/ingredients/iframe")
         step("Realizando a troca de iframe, ou seja pra tela do youtube para dar o clique  - Selenium")
         frameIndex(1)
-        find("button[aria-label=Reproduzir]", focus = true).click()
+        find(elements.youtubePlayButton, focus = true).click()
     }
 }

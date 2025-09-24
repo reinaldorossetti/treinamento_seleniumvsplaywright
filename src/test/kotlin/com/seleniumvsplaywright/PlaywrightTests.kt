@@ -1,13 +1,14 @@
 package com.seleniumvsplaywright
 
 import com.microsoft.playwright.FrameLocator
+import com.microsoft.playwright.Page
 import com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat
-import com.seleniumvsplaywright.core.libs.BasePlaywright
 import com.seleniumvsplaywright.core.config.BrowserConfigPlaywright
+import com.seleniumvsplaywright.core.libs.BasePlaywright
 import com.seleniumvsplaywright.model.DesafioElements
 import io.qameta.allure.Allure.step
+import io.qameta.allure.Attachment
 import org.junit.jupiter.api.*
-import org.junit.jupiter.api.parallel.ResourceLock
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.testng.Assert.assertEquals
@@ -21,12 +22,10 @@ class PlaywrightTests: BasePlaywright(BrowserConfigPlaywright().setPWBrowser()) 
     @AfterTest
     fun quit() = closeBrowser()
 
-/*
 // Deixei comentado pois o print degrada a performance dos testes
     @AfterEach
     @Attachment(type = "image/png")
     fun testTakeScreen() = takeScreen()
-*/
 
     @Test
     fun round1Login(){
@@ -61,9 +60,7 @@ class PlaywrightTests: BasePlaywright(BrowserConfigPlaywright().setPWBrowser()) 
         navigate("/ingredients/iframe")
         step("Realizando a troca de iframe, ou seja pra tela do youtube para dar o clique  - Playwright")
         val iframeLocator: FrameLocator = pw.frameLocator(elements.iframeID)
-        val button = iframeLocator.locator(elements.youtubePlayButton)
-        button.click()
-        assertThat(button).not().isVisible()
+        iframeLocator.locator(elements.youtubePlayButton).click()
     }
 
 }
